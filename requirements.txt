@@ -1,0 +1,6 @@
+pandas
+numpy
+plotly
+django
+django-debug-toolbar
+mysqlclient

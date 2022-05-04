@@ -1,0 +1,1218 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+{% include 'sidebar.html' %}
+
+<div class="main">
+    <nav class="navbar navbar-expand navbar-light navbar-bg">
+                    <a class="sidebar-toggle js-sidebar-toggle">
+                      <i class="hamburger align-self-center"></i>
+                    </a>
+
+<!--                    <div class="navbar-collapse collapse">-->
+<!--                        <ul class="navbar-nav navbar-align">-->
+<!--                            <li class="nav-item dropdown">-->
+<!--                                <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">-->
+<!--                                    <div class="position-relative">-->
+<!--                                        <i class="align-middle" data-feather="bell"></i>-->
+<!--                                        <span class="indicator">4</span>-->
+<!--                                    </div>-->
+<!--                                </a>-->
+<!--                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">-->
+<!--                                    <div class="dropdown-menu-header">-->
+<!--                                        4 New Notifications-->
+<!--                                    </div>-->
+<!--                                    <div class="list-group">-->
+<!--                                        <a href="#" class="list-group-item">-->
+<!--                                            <div class="row g-0 align-items-center">-->
+<!--                                                <div class="col-2">-->
+<!--                                                    <i class="text-danger" data-feather="alert-circle"></i>-->
+<!--                                                </div>-->
+<!--                                                <div class="col-10">-->
+<!--                                                    <div class="text-dark">Update completed</div>-->
+<!--                                                    <div class="text-muted small mt-1">Restart server 12 to complete the update.</div>-->
+<!--                                                    <div class="text-muted small mt-1">30m ago</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                        <a href="#" class="list-group-item">-->
+<!--                                            <div class="row g-0 align-items-center">-->
+<!--                                                <div class="col-2">-->
+<!--                                                    <i class="text-warning" data-feather="bell"></i>-->
+<!--                                                </div>-->
+<!--                                                <div class="col-10">-->
+<!--                                                    <div class="text-dark">Lorem ipsum</div>-->
+<!--                                                    <div class="text-muted small mt-1">Aliquam ex eros, imperdiet vulputate hendrerit et.</div>-->
+<!--                                                    <div class="text-muted small mt-1">2h ago</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                        <a href="#" class="list-group-item">-->
+<!--                                            <div class="row g-0 align-items-center">-->
+<!--                                                <div class="col-2">-->
+<!--                                                    <i class="text-primary" data-feather="home"></i>-->
+<!--                                                </div>-->
+<!--                                                <div class="col-10">-->
+<!--                                                    <div class="text-dark">Login from 192.186.1.8</div>-->
+<!--                                                    <div class="text-muted small mt-1">5h ago</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                        <a href="#" class="list-group-item">-->
+<!--                                            <div class="row g-0 align-items-center">-->
+<!--                                                <div class="col-2">-->
+<!--                                                    <i class="text-success" data-feather="user-plus"></i>-->
+<!--                                                </div>-->
+<!--                                                <div class="col-10">-->
+<!--                                                    <div class="text-dark">New connection</div>-->
+<!--                                                    <div class="text-muted small mt-1">Christina accepted your request.</div>-->
+<!--                                                    <div class="text-muted small mt-1">14h ago</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                    </div>-->
+<!--                                    <div class="dropdown-menu-footer">-->
+<!--                                        <a href="#" class="text-muted">Show all notifications</a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                            <li class="nav-item dropdown">-->
+<!--                                <a class="nav-icon dropdown-toggle" href="#" id="messagesDropdown" data-bs-toggle="dropdown">-->
+<!--                                    <div class="position-relative">-->
+<!--                                        <i class="align-middle" data-feather="message-square"></i>-->
+<!--                                    </div>-->
+<!--                                </a>-->
+<!--                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="messagesDropdown">-->
+<!--                                    <div class="dropdown-menu-header">-->
+<!--                                        <div class="position-relative">-->
+<!--                                            4 New Messages-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="list-group">-->
+<!--                                        <a href="#" class="list-group-item">-->
+<!--                                            <div class="row g-0 align-items-center">-->
+<!--                                                <div class="col-2">-->
+<!--                                                    <img src="img/avatars/avatar-5.jpg" class="avatar img-fluid rounded-circle" alt="Vanessa Tucker">-->
+<!--                                                </div>-->
+<!--                                                <div class="col-10 ps-2">-->
+<!--                                                    <div class="text-dark">Vanessa Tucker</div>-->
+<!--                                                    <div class="text-muted small mt-1">Nam pretium turpis et arcu. Duis arcu tortor.</div>-->
+<!--                                                    <div class="text-muted small mt-1">15m ago</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                        <a href="#" class="list-group-item">-->
+<!--                                            <div class="row g-0 align-items-center">-->
+<!--                                                <div class="col-2">-->
+<!--                                                    <img src="img/avatars/avatar-2.jpg" class="avatar img-fluid rounded-circle" alt="William Harris">-->
+<!--                                                </div>-->
+<!--                                                <div class="col-10 ps-2">-->
+<!--                                                    <div class="text-dark">William Harris</div>-->
+<!--                                                    <div class="text-muted small mt-1">Curabitur ligula sapien euismod vitae.</div>-->
+<!--                                                    <div class="text-muted small mt-1">2h ago</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                        <a href="#" class="list-group-item">-->
+<!--                                            <div class="row g-0 align-items-center">-->
+<!--                                                <div class="col-2">-->
+<!--                                                    <img src="img/avatars/avatar-4.jpg" class="avatar img-fluid rounded-circle" alt="Christina Mason">-->
+<!--                                                </div>-->
+<!--                                                <div class="col-10 ps-2">-->
+<!--                                                    <div class="text-dark">Christina Mason</div>-->
+<!--                                                    <div class="text-muted small mt-1">Pellentesque auctor neque nec urna.</div>-->
+<!--                                                    <div class="text-muted small mt-1">4h ago</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                        <a href="#" class="list-group-item">-->
+<!--                                            <div class="row g-0 align-items-center">-->
+<!--                                                <div class="col-2">-->
+<!--                                                    <img src="img/avatars/avatar-3.jpg" class="avatar img-fluid rounded-circle" alt="Sharon Lessman">-->
+<!--                                                </div>-->
+<!--                                                <div class="col-10 ps-2">-->
+<!--                                                    <div class="text-dark">Sharon Lessman</div>-->
+<!--                                                    <div class="text-muted small mt-1">Aenean tellus metus, bibendum sed, posuere ac, mattis non.</div>-->
+<!--                                                    <div class="text-muted small mt-1">5h ago</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                    </div>-->
+<!--                                    <div class="dropdown-menu-footer">-->
+<!--                                        <a href="#" class="text-muted">Show all messages</a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                            <li class="nav-item dropdown">-->
+<!--                                <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">-->
+<!--                    <i class="align-middle" data-feather="settings"></i>-->
+<!--                  </a>-->
+
+<!--                                <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">-->
+<!--                    <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span class="text-dark">Charles Hall</span>-->
+<!--                  </a>-->
+<!--                                <div class="dropdown-menu dropdown-menu-end">-->
+<!--                                    <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>-->
+<!--                                    <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>-->
+<!--                                    <div class="dropdown-divider"></div>-->
+<!--                                    <a class="dropdown-item" href="index.html"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>-->
+<!--                                    <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>-->
+<!--                                    <div class="dropdown-divider"></div>-->
+<!--                                    <a class="dropdown-item" href="#">Log out</a>-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+                </nav>
+
+    <main class="content">
+        <div class="container-fluid p-0">
+
+            <div class="row">
+                <div class="col-12 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-body">
+                            <div class="mb-0">
+                                <h2>Components of a Trading Strategy</h2>
+                                <p>
+                                    While there are many variations of strategies that exist, all strategies need
+                                    to have a few basic components. These are:
+                                </p>
+                                <ul>
+                                    <ul>
+                                        <li>criteria for an entry</li>
+                                        <li>criteria to let you know when you're wrong on the trade</li>
+                                        <li>rules to let you know when to take profit</li>
+                                    </ul>
+                                </ul>
+                                <p>In practical terms these are your entry price, stop price (or risk price),
+                                    and profit exit (or profit target). Every strategy tested here has rules for
+                                    establishing all three of these components. Breaking this down further is the
+                                    concept of R multiples. Since denominating P/L returns in raw dollar amounts
+                                    can bring up some issues with commonality its best to record returns in units
+                                    of R.
+                                </p>
+                                <h2>What is R?</h2>
+                                <p>
+                                    R stands for risk multiples, or units of risk. R is found by taking the difference between the entry
+                                    price and risk price. That price range is known as 1R, or 1 unit of risk. Once the 1R risk is
+                                    established the profit or loss of that trade will then be denoted as a multiple of that 1R risk.
+                                    The good thing about R multiples is that raw dollar amounts can be represented by units of R. For
+                                    example if you want to risk $100 per trade then 1R would represent $100. If you were stopped out on
+                                    the trade then you would lose 1R or $100. If you were to make a 2.5R profit on the trade then you
+                                    would effectively make ($100 * 2.5) = $250. Some strategies here will have exit criteria that rely
+                                    on the behavior of technical indicators, some will have specific profit targets denoted as multiples
+                                    of R
+                                    <br><br>
+                                    It should also be noted that R risk is not the total amount put into a trade. R is simply
+                                    represents what you stand to lose if your stop is hit.
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-body">
+                            <div class="mb-0">
+                                <h3>Concept of R Multiples</h3>
+                                <a href="{% static 'images/interpreting_results_images/R_multiples_example.png' %}" target="_blank">
+                                    <img src="{% static 'images/interpreting_results_images/R_multiples_example.png' %}" class="img-fluid rounded mx-auto d-block">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-body">
+                            <div class="mb-0">
+                                <h3>How Risk is Measured and Established</h3>
+                                <p>
+                                    While there are many methods to determine where to place a stop, for the purposes of this site, the risk
+                                    price for all trades is found by utilizing a technical indicator called Average True Range (ATR).
+                                    ATR is a measure that looks back in time x number of periods and provides a measure of volatility
+                                    in terms of price increments. Higher readings mean more volatility, lower readings mean less
+                                    volatility. For example, if the 14 period ATR for an asset with a price range between $10 and $15
+                                    might return a price of $0.75 meaning that average volatility in the last 14 periods was $0.75.
+                                    <br><br>
+                                    To determine a good place to put a stop you can take multiples of this measurement, which all
+                                    strategies here do. So if the 14 period ATR is $0.75 you can multiply that by a factor of 1.5
+                                    to get $1.125. If an entry signal is generated you can then place your stop $1.125 below the
+                                    entry price (if the trade is a long, for short trades the opposite applies)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-body">
+                            <div class="mb-0">
+                                <h3>Using ATR to Define Risk</h3>
+                                <a href="{% static 'images/interpreting_results_images/ATR_R_multiples_example.png' %}" target="_blank">
+                                    <img src="{% static 'images/interpreting_results_images/ATR_R_multiples_example.png' %}" class="img-fluid rounded mx-auto d-block">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-body">
+                            <div class="mb-0">
+                                <h3>Evaluation Metrics</h3>
+                                <p>
+                                    In addition to requiring the basic components, its also important to understand how to evaluate the
+                                    results of a trading strategy. Contrary to what may appear to be obvious, profitability isn't
+                                    the end-all-be-all of strategy evaluation. If you are going to implement a strategy there are
+                                    many factors that need to be considered in order to pick something that meets your
+                                    personal requirements.
+                                    <br><br>
+                                    If your goal is profit over everything you are likely going to sacrifice consistency in
+                                    individual trade returns and experience a very choppy equity curve.
+                                    <br><br>
+                                    If you goal is to take less risk and see less volatility in the equity curve its very likely
+                                    your're going to end up leaving more money on the table.
+                                    <br><br>
+                                    If your goal is a smooth equity curve and maximized profits then you're all but guaranteed to
+                                    do so at the expense of longevity. "Perfect" strategies are almost always very short lived.
+                                    <br><br>
+                                    There are many tradeoffs to consider. That being said, here is the list of evaluation metrics
+                                    I use to assess the performance, strengths, and weaknesses of any particular permutation of
+                                    a strategy you may find here.
+                                    <br><br>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion" id="EvalsAccordion">
+                <!-- Total Realized R               -->
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-body">
+                                <div class="mb-0">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading1">
+                                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                                                <span class="text-dark">Total Realized R</span>
+							                </a>
+                                            <hr>
+                                        </h2>
+                                        <div id="collapse1" class="accordion-collapse collapse show" aria-labelledby="heading1" data-bs-parent="#EvalsAccordion">
+                                          <div class="accordion-body">
+                                              <p>The final profit or loss of a strategy permutation for the given month as R multiples.
+                                                  If a strategy returns 20R in a month and your R risk per trade in real dollar terms
+                                                  is $100, then (20R * $100) = $2000.
+                                              </p>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Strike Rate               -->
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-body">
+                                <div class="mb-0">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading2">
+                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
+                                                <span class="text-dark">Strike Rate</span>
+							                </a>
+                                            <hr>
+                                        </h2>
+                                        <div id="collapse2" class="accordion-collapse collapse show" aria-labelledby="heading2" data-bs-parent="#EvalsAccordion">
+                                          <div class="accordion-body">
+                                              <p>The ratio of winning trades to total trades, or the win rate.
+                                              </p>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Num Trades               -->
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-body">
+                                <div class="mb-0">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading3">
+                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="true" aria-controls="collapse3">
+                                                <span class="text-dark">Num Trades</span>
+							                </a>
+                                            <hr>
+                                        </h2>
+                                        <div id="collapse3" class="accordion-collapse collapse show" aria-labelledby="heading3" data-bs-parent="#EvalsAccordion">
+                                          <div class="accordion-body">
+                                              <p>The total number of trades that occurred within the backtesting period.
+                                              </p>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Avg Hold Time               -->
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-body">
+                                <div class="mb-0">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading4">
+                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="true" aria-controls="collapse4">
+                                                <span class="text-dark">Avg Hold Time</span>
+							                </a>
+                                            <hr>
+                                        </h2>
+                                        <div id="collapse4" class="accordion-collapse collapse show" aria-labelledby="heading4" data-bs-parent="#EvalsAccordion">
+                                          <div class="accordion-body">
+                                              <p>The average number of seconds spent in a trade.
+                                              </p>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Avg Winner               -->
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-body">
+                                <div class="mb-0">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading5">
+                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="true" aria-controls="collapse5">
+                                                <span class="text-dark">Avg Winner</span>
+							                </a>
+                                            <hr>
+                                        </h2>
+                                        <div id="collapse5" class="accordion-collapse collapse show" aria-labelledby="heading5" data-bs-parent="#EvalsAccordion">
+                                          <div class="accordion-body">
+                                              <p>Average R profit on winning trades.
+                                              </p>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Avg Loser               -->
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-body">
+                                <div class="mb-0">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading6">
+                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="true" aria-controls="collapse6">
+                                                <span class="text-dark">Avg Loser</span>
+							                </a>
+                                            <hr>
+                                        </h2>
+                                        <div id="collapse6" class="accordion-collapse collapse show" aria-labelledby="heading6" data-bs-parent="#EvalsAccordion">
+                                          <div class="accordion-body">
+                                              <p>Average R loss on losing trades.
+                                              </p>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expectancy               -->
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-body">
+                                <div class="mb-0">
+                                     <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading7">
+                                             <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapse7" aria-expanded="true" aria-controls="collapse7">
+                                                <span class="text-dark">Expectancy</span>
+							                </a>
+                                            <hr>
+                                        </h2>
+                                        <div id="collapse7" class="accordion-collapse collapse show" aria-labelledby="heading7" data-bs-parent="#EvalsAccordion">
+                                          <div class="accordion-body">
+                                              <p>the average expected return per trade, denoted in R calculated as
+                                                  (Strike Rate * Avg Winner) - ((1 - Strike Rate) * Avg Loser).
+                                                  Strategies with a negative expectancy lose money on average and should be avoided
+                                              </p>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Largest Winner               -->
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-body">
+                                <div class="mb-0">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading8">
+                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapse8" aria-expanded="true" aria-controls="collapse8">
+                                                <span class="text-dark">Largest Winner</span>
+							                </a>
+                                            <hr>
+                                        </h2>
+                                        <div id="collapse8" class="accordion-collapse collapse show" aria-labelledby="heading8" data-bs-parent="#EvalsAccordion">
+                                          <div class="accordion-body">
+                                              <p>The largest winning trade on record denoted in R. This should be compared to
+                                                  Total Realized R. If the largest winning trade is a significant portion of
+                                                  total profit then this tells you that the majority of the strategy's success
+                                                  for that period can be attributed one big trade. While this isn't necessarily
+                                                  a bad thing, if the strategy was only profitable because of one large winner
+                                                  it might not be as viable as it first appears.
+                                              </p>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Largest_Loser               -->
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-body">
+                                <div class="mb-0">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading9">
+                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapse9" aria-expanded="true" aria-controls="collapse9">
+                                                <span class="text-dark">Largest Winner</span>
+							                </a>
+                                            <hr>
+                                        </h2>
+                                        <div id="collapse9" class="accordion-collapse collapse show" aria-labelledby="heading9" data-bs-parent="#EvalsAccordion">
+                                          <div class="accordion-body">
+                                              <p>The largest losing trade denoted in R. Because the backtests are coded to work
+                                                  off of closing prices, this metric could very well be less than -1R as trades
+                                                  are exited on the first close that breaks below risk price (for longs) or above
+                                                  risk price (for shorts).
+                                              </p>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Max Drawdown               -->
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-body">
+                                <div class="mb-0">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading10">
+                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapse10" aria-expanded="true" aria-controls="collapse10">
+                                                <span class="text-dark">Max Drawdown</span>
+							                </a>
+                                            <hr>
+                                        </h2>
+                                        <div id="collapse10" class="accordion-collapse collapse show" aria-labelledby="heading10" data-bs-parent="#EvalsAccordion">
+                                          <div class="accordion-body">
+                                              <p>The largest number of consecutive losing trades. This can be compared to the total
+                                                  number of trades or examined individually and should also be taken into context
+                                                  with the granularity of data and the length of the trading period. A larger Max
+                                                  Drawdown means the strategy experienced a period where it was severely disconnected
+                                                  from the flow of the market and generated many consecutive wrong signals as a result.
+                                                  Although it could also mean stops were too tight. However there is a caveat. Smaller
+                                                  data granularity over larger timeframes will likely have periods of at least somewhat
+                                                  significant drawdown simply because the strategy has been exposed to a greater
+                                                  variety of market conditions.
+                                              </p>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Max Drawup               -->
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-body">
+                                <div class="mb-0">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading11">
+                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapse11" aria-expanded="true" aria-controls="collapse11">
+                                                <span class="text-dark">Max Drawup</span>
+							                </a>
+                                            <hr>
+                                        </h2>
+                                        <div id="collapse11" class="accordion-collapse collapse show" aria-labelledby="heading11" data-bs-parent="#EvalsAccordion">
+                                          <div class="accordion-body">
+                                              <p>The largest number of consecutive winning trades. This can be compared to the total
+                                                  number of trades or examined individually and should also be taken into context
+                                                  with the granularity of data and the length of the trading period. A larger Max
+                                                  Drawup means the strategy experienced a period where it was very attuned to market
+                                                  conditions. This can be both good and bad. While having a drawup is nice at the time
+                                                  it could mean the strategy is/was overfit to market conditions at the time. If Max
+                                                  Drawup and Total Realized R are abnormally high (especially compared to more historical
+                                                  results) then this likely signals an overfit and you can reasonably expect Max Drawup,
+                                                  Strike Rate, Total Realized R or all three to drop in future periods.
+                                              </p>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MAE/MFE Concepts               -->
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-body">
+                                <div class="mb-0">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading12">
+                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapse12" aria-expanded="true" aria-controls="collapse12">
+                                                <span class="text-dark">MAE/MFE Concepts</span>
+							                </a>
+                                            <hr>
+                                        </h2>
+                                        <div id="collapse12" class="accordion-collapse collapse show" aria-labelledby="heading12" data-bs-parent="#EvalsAccordion">
+                                          <div class="accordion-body">
+                                              <div class="row">
+                                                <div class="col-12 d-flex">
+                                                    <div class="card flex-fill">
+                                                        <div class="card-body">
+                                                            <div class="mb-0">
+                                                                  <p><strong>MAE</strong> - Maximum Adverse Excursion.
+                                                                      Calculated using high/low prices and is the
+                                                                      farthest a trade moves against you over the
+                                                                      lifetime of the trade
+                                                                  </p>
+                                                                  <p><strong>MFE</strong> - Maximum Favorable Excursion
+                                                                      Calculated using high/low prices and is the
+                                                                      farthest a trade moves in your favor over the
+                                                                      lifetime of the trade
+                                                                  </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                              </div>
+
+
+                                              <div class="accordion" id="accordionMFE_MAE">
+
+                                                  <!-- Winners Avg MAE             -->
+                                                  <div class="row">
+                                                      <div class="col-12 d-flex">
+                                                          <div class="card flex-fill">
+                                                              <div class="card-body">
+                                                                  <div class="mb-0">
+                                                                      <div class="accordion-item">
+                                                                        <h3 class="accordion-header" id="headingOne">
+                                                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                                                <span class="text-dark">Winners Avg MAE</span>
+                                                                            </a>
+                                                                            <hr>
+                                                                        </h3>
+                                                                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionMFE_MAE">
+                                                                          <div class="accordion-body">
+                                                                              <div class="row">
+                                                                                  <div class="row">
+                                                                                      <p>The average maximum adverse excursion (MAE) of all winning trades,
+                                                                                          denoted in R multiples.
+                                                                                      </p>
+                                                                                  </div>
+                                                                                  <div class="row">
+                                                                                      <a href="{% static 'images/interpreting_results_images/winners_mae.png' %}" target="_blank">
+                                                                                          <img src="{% static 'images/interpreting_results_images/winners_mae.png' %}" class="img-fluid rounded mx-auto d-block">
+                                                                                      </a>
+                                                                                  </div>
+                                                                              </div>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+
+                                                  <!-- Winners Std Dev MAE         -->
+                                                   <div class="row">
+                                                      <div class="col-12 d-flex">
+                                                          <div class="card flex-fill">
+                                                              <div class="card-body">
+                                                                  <div class="mb-0">
+                                                                      <div class="accordion-item">
+                                                                        <h3 class="accordion-header" id="headingTwo">
+                                                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                                                                <span class="text-dark">Winners Std Dev MAE</span>
+                                                                            </a>
+                                                                            <hr>
+                                                                        </h3>
+                                                                        <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionMFE_MAE">
+                                                                          <div class="accordion-body">
+                                                                              <div class="row">
+                                                                                  <div class="row">
+                                                                                      <p>The standard deviation of the maximum adverse excursion (MAE),
+                                                                                          denoted in R multiples, for all winning trades. Winners Std Dev
+                                                                                          MAE is useful because it offers some insight into the behavior
+                                                                                          of winning trades. For example, if the standard deviation of MAE
+                                                                                          for a string of winning trades is 0.2R and the average MAE is
+                                                                                          0.4R, you add the standard deviation of 0.2R to 0.4R and get to
+                                                                                          0.6R. Given a normal bell curve this represents 84% of the
+                                                                                          distribution of MAE, meaning that 84% of MAE values fall between
+                                                                                          0R and 0.6R. This implies you can tighten your stops to from the
+                                                                                          originally planned 1R to 0.6R (which becomes the new 1R risk on
+                                                                                          future trades). Consequently, because your 1R stop is tighter
+                                                                                          this magnifies any gains as measured in multiples of R, meaning
+                                                                                          that you make more R multiples in profit given the same price movement.
+                                                                                      </p>
+                                                                                  </div>
+                                                                                  <div class="row">
+                                                                                      <a href="{% static 'images/interpreting_results_images/winners_std_dev_mae.png' %}" target="_blank">
+                                                                                          <img src="{% static 'images/interpreting_results_images/winners_std_dev_mae.png' %}" class="img-fluid rounded mx-auto d-block">
+                                                                                      </a>
+                                                                                  </div>
+                                                                              </div>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                   </div>
+
+                                                  <!-- Winners Avg MFE             -->
+                                                   <div class="row">
+                                                    <div class="col-12 d-flex">
+                                                        <div class="card flex-fill">
+                                                            <div class="card-body">
+                                                                <div class="mb-0">
+                                                                    <div class="accordion-item">
+                                                                    <h3 class="accordion-header" id="headingThree">
+                                                                        <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                                                                            <span class="text-dark">Winners Avg MFE </span>
+                                                                        </a>
+                                                                        <hr>
+                                                                    </h3>
+                                                                    <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionMFE_MAE">
+                                                                      <div class="accordion-body">
+                                                                          <div class="row">
+                                                                              <div class="row">
+                                                                                  <p>The average maximum favorable excursion (MFE) of all winning trades,
+                                                                                      denoted in R multiples.
+                                                                                  </p>
+                                                                              </div>
+                                                                              <div class="row">
+                                                                                  <a href="{% static 'images/interpreting_results_images/winners_mfe.png' %}" target="_blank">
+                                                                                      <img src="{% static 'images/interpreting_results_images/winners_mfe.png' %}" class="img-fluid rounded mx-auto d-block">
+                                                                                  </a>
+                                                                              </div>
+                                                                          </div>
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                  </div>
+
+                                                  <!-- Winners Std Dev MFE         -->
+                                                   <div class="row">
+                                                      <div class="col-12 d-flex">
+                                                          <div class="card flex-fill">
+                                                              <div class="card-body">
+                                                                  <div class="mb-0">
+                                                                      <div class="accordion-item">
+                                                                        <h3 class="accordion-header" id="headingFour">
+                                                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                                                                                <span class="text-dark">Winners Std Dev MFE</span>
+                                                                            </a>
+                                                                            <hr>
+                                                                        </h3>
+                                                                        <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingFour" data-bs-parent="#accordionMFE_MAE">
+                                                                          <div class="accordion-body">
+                                                                              <div class="row">
+                                                                                  <div class="row">
+                                                                                      <p>The standard deviation of maximum favorable excursion (MFE), denoted
+                                                                                          in R multiples, for all winning trades. For strategies that take
+                                                                                          their exit signals from technical readings. Winners Std Dev MFE
+                                                                                          can be compared to Average Winner to give you an idea of how much
+                                                                                          money you are leaving on the table. For example if the Avg Winner
+                                                                                          is 1.5R but the Winners Avg MFE is 6 and the Winners Std Dev MFE
+                                                                                          is 0.5R, this means your Avg Winner is very far outside the MFE
+                                                                                          bell curve distribution and there's a lot of room for improvement
+                                                                                          on profit exits. However for strategies with fixed profit targets,
+                                                                                          MFE will likely be meaningless.
+                                                                                      </p>
+                                                                                  </div>
+                                                                                  <div class="row">
+                                                                                      <a href="{% static 'images/interpreting_results_images/winners_std_dev_mfe.png' %}" target="_blank">
+                                                                                          <img src="{% static 'images/interpreting_results_images/winners_std_dev_mfe.png' %}" class="img-fluid rounded mx-auto d-block">
+                                                                                      </a>
+                                                                                  </div>
+                                                                              </div>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                   </div>
+
+                                                  <!--  Losers Avg MAE             -->
+                                                   <div class="row">
+                                                      <div class="col-12 d-flex">
+                                                          <div class="card flex-fill">
+                                                              <div class="card-body">
+                                                                  <div class="mb-0">
+                                                                      <div class="accordion-item">
+                                                                        <h3 class="accordion-header" id="headingFive">
+                                                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+                                                                                <span class="text-dark">Losers Avg MAE</span>
+                                                                            </a>
+                                                                            <hr>
+                                                                        </h3>
+                                                                        <div id="collapseFive" class="accordion-collapse collapse show" aria-labelledby="headingFive" data-bs-parent="#accordionMFE_MAE">
+                                                                          <div class="accordion-body">
+                                                                              <div class="row">
+                                                                                  <div class="row">
+                                                                                      <p>The average maximum adverse excursion (MAE) of all losing trades, denoted
+                                                                                          in R multiples. In a perfect world this should always be 1R, however since
+                                                                                          loss exits are made on the first closing price to break the risk price,
+                                                                                          many of the strategies here will have a Losers Avg MAE greater than 1R.
+                                                                                      </p>
+                                                                                  </div>
+                                                                                  <div class="row">
+                                                                                      <a href="{% static 'images/interpreting_results_images/losers_mae.png' %}" target="_blank">
+                                                                                          <img src="{% static 'images/interpreting_results_images/losers_mae.png' %}" class="img-fluid rounded mx-auto d-block">
+                                                                                      </a>
+                                                                                  </div>
+                                                                              </div>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                   </div>
+
+                                                  <!-- Losers Std Dev MAE                             -->
+                                                   <div class="row">
+                                                      <div class="col-12 d-flex">
+                                                          <div class="card flex-fill">
+                                                              <div class="card-body">
+                                                                  <div class="mb-0">
+                                                                      <div class="accordion-item">
+                                                                        <h3 class="accordion-header" id="headingSix">
+                                                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
+                                                                                <span class="text-dark">Losers Std Dev MAE</span>
+                                                                            </a>
+                                                                            <hr>
+                                                                        </h3>
+                                                                        <div id="collapseSix" class="accordion-collapse collapse show" aria-labelledby="headingSix" data-bs-parent="#accordionMFE_MAE">
+                                                                          <div class="accordion-body">
+                                                                              <div class="row">
+                                                                                  <div class="row">
+                                                                                      <p>The standard deviation of the maximum adverse excursion (MAE),
+                                                                                          denoted in R multiples, for all losing trades. This is useful
+                                                                                          as it gives insight into how much R you are losing past the
+                                                                                          allotted 1R amount (also known as stop slippage). Losers Std
+                                                                                          Dev MAE provides a metric to see how serious of a stop slippage
+                                                                                          problem exists in the strategy. The higher the number the more
+                                                                                          of an issue the strategy has with stop slippage. As previously
+                                                                                          mentioned, loss exits are made on closing prices that break
+                                                                                          risk price, not the risk price itself. In the real world you
+                                                                                          want a strategy that executes your order as close as possible
+                                                                                          to your stop when the time comes to get out of a losing trade.
+                                                                                          However that isn't always possible. Sometimes there's slippage,
+                                                                                          sometimes prices gap, sometimes trading gets halted, sometimes
+                                                                                          there's a wild print that throws execution algos off. All of this
+                                                                                          is difficult to accurately account for when coding a backtest.
+                                                                                      </p>
+                                                                                  </div>
+                                                                                  <div class="row">
+                                                                                      <a href="{% static 'images/interpreting_results_images/losers_std_dev_mae.png' %}" target="_blank">
+                                                                                          <img src="{% static 'images/interpreting_results_images/losers_std_dev_mae.png' %}" class="img-fluid rounded mx-auto d-block">
+                                                                                      </a>
+                                                                                  </div>
+                                                                              </div>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                   </div>
+
+                                                  <!-- Losers Avg MFE                              -->
+                                                   <div class="row">
+                                                      <div class="col-12 d-flex">
+                                                          <div class="card flex-fill">
+                                                              <div class="card-body">
+                                                                  <div class="mb-0">
+                                                                      <div class="accordion-item">
+                                                                        <h3 class="accordion-header" id="headingSeven">
+                                                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
+                                                                                <span class="text-dark">Losers Avg MFE</span>
+                                                                            </a>
+                                                                            <hr>
+                                                                        </h3>
+                                                                        <div id="collapseSeven" class="accordion-collapse collapse show" aria-labelledby="headingSeven" data-bs-parent="#accordionMFE_MAE">
+                                                                          <div class="accordion-body">
+                                                                               <div class="row">
+                                                                                  <div class="row">
+                                                                                      <p>The average maximum favorable excursion (MFE) of all losing trades, denoted
+                                                                                          in R multiples.
+                                                                                      </p>
+                                                                                  </div>
+                                                                                  <div class="row">
+                                                                                      <a href="{% static 'images/interpreting_results_images/losers_mfe.png' %}" target="_blank">
+                                                                                          <img src="{% static 'images/interpreting_results_images/losers_mfe.png' %}" class="img-fluid rounded mx-auto d-block">
+                                                                                      </a>
+                                                                                  </div>
+                                                                              </div>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                   </div>
+
+                                                  <!-- Losers Std Dev MFE                             -->
+                                                   <div class="row">
+                                                      <div class="col-12 d-flex">
+                                                          <div class="card flex-fill">
+                                                              <div class="card-body">
+                                                                  <div class="mb-0">
+                                                                      <div class="accordion-item">
+                                                                        <h3 class="accordion-header" id="headingEight">
+                                                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="true" aria-controls="collapseEight">
+                                                                                <span class="text-dark">Losers Std Dev MFE</span>
+                                                                            </a>
+                                                                            <hr>
+                                                                        </h3>
+                                                                        <div id="collapseEight" class="accordion-collapse collapse show" aria-labelledby="headingEight" data-bs-parent="#accordionMFE_MAE">
+                                                                          <div class="accordion-body">
+                                                                              <div class="row">
+                                                                                  <div class="row">
+                                                                                      <p>The standard deviation of maximum favorable excursion (MFE),
+                                                                                          denoted in R multiples, for all losing trades. Losers Std
+                                                                                          Dev MFE is useful as it offers some insight into the upside
+                                                                                          behavior of losing trades. Specifically, how far into profit
+                                                                                          a trade gets before it stops you out for a loss. For example,
+                                                                                          if the Losers Avg MFE is 1R and the Losers Std Dev MFE is 0.3R,
+                                                                                          this means that effectively 50% of your losing trades are falling
+                                                                                          between 1R and 1.9R before stopping you out. Obviously, this
+                                                                                          information is extremely useful as it suggest you can turn a
+                                                                                          significant portion of losers into winners by lowering the
+                                                                                          profit target to 1R (or tightening the exit parameters). While
+                                                                                          this is going to decrease the profitability of each individual trade,
+                                                                                          it will increase your strike rate and decrease the volatility of
+                                                                                          your equity curve.
+                                                                                      </p>
+                                                                                  </div>
+                                                                                  <div class="row">
+                                                                                      <a href="{% static 'images/interpreting_results_images/losers_std_dev_mfe.png' %}" target="_blank">
+                                                                                          <img src="{% static 'images/interpreting_results_images/losers_std_dev_mfe.png' %}" class="img-fluid rounded mx-auto d-block">
+                                                                                      </a>
+                                                                                  </div>
+                                                                              </div>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                   </div>
+
+                                              </div>
+
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Number of Bars               -->
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-body">
+                                <div class="mb-0">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading13">
+                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapse13" aria-expanded="true" aria-controls="collapse13">
+                                                <span class="text-dark">Number of Bars</span>
+							                </a>
+                                            <hr>
+                                        </h2>
+                                        <div id="collapse13" class="accordion-collapse collapse show" aria-labelledby="heading13" data-bs-parent="#EvalsAccordion">
+                                          <div class="accordion-body">
+                                              <p>The number of total candles for the backtesting period.
+                                              </p>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Returns to Asset Corr               -->
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-body">
+                                <div class="mb-0">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading14">
+                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapse14" aria-expanded="true" aria-controls="collapse14">
+                                                <span class="text-dark">Returns to Asset Corr</span>
+							                </a>
+                                            <hr>
+                                        </h2>
+                                        <div id="collapse14" class="accordion-collapse collapse show" aria-labelledby="heading14" data-bs-parent="#EvalsAccordion">
+                                          <div class="accordion-body">
+                                              <p>The correlation coefficient of the equity curve to asset candle data
+                                                  (1 = perfect correlation, 0 = no correlation, -1 = perfect inverse correlation).
+                                                  This basically tells you the degree the strategy returns follow the movements of
+                                                  the underlying asset. Generally speaking, its usually not good if the strategy
+                                                  returns are highly correlated to the asset its trading, especially if there are
+                                                  a large number of trades. Why risk the slippage and pay the commission on a
+                                                  strategy just to get the same returns as just holding the asset.
+                                              </p>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Equity Curve Regression Slope             -->
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-body">
+                                <div class="mb-0">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading15">
+                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapse15" aria-expanded="true" aria-controls="collapse15">
+                                                <span class="text-dark">Equity Curve Regression Slope</span>
+							                </a>
+                                            <hr>
+                                        </h2>
+                                        <div id="collapse15" class="accordion-collapse collapse show" aria-labelledby="heading15" data-bs-parent="#EvalsAccordion">
+                                          <div class="accordion-body">
+                                              <div class="row">
+                                                  <div class="row">
+                                                      <p>The slope of the line of best fit of the equity curve. Basically this just provides
+                                                      the general direction of the equity curve. The larger the number, the more upward
+                                                      sloping the equity curve is. If the number is close to zero, there is no slope and
+                                                      the equity curve is generally flat. If the number is negative, this indicates a
+                                                      downward sloping equity curve (i.e. the strategy is losing money).
+                                                      </p>
+                                                  </div>
+                                                  <div class="row">
+                                                      <a href="{% static 'images/interpreting_results_images/regression_slope.png' %}" target="_blank">
+                                                          <img src="{% static 'images/interpreting_results_images/regression_slope.png' %}" class="img-fluid rounded mx-auto d-block">
+                                                      </a>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Equity Curve Regression Std Error             -->
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-body">
+                                <div class="mb-0">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading16">
+                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapse16" aria-expanded="true" aria-controls="collapse16">
+                                                <span class="text-dark">Equity Curve Regression Std Error</span>
+							                </a>
+                                            <hr>
+                                        </h2>
+                                        <div id="collapse16" class="accordion-collapse collapse show" aria-labelledby="heading16" data-bs-parent="#EvalsAccordion">
+                                          <div class="accordion-body">
+                                              <div class="row">
+                                                  <div class="row">
+                                                      <p>The average residual (also refered to as average error) of the regression line. This is calculated by
+                                                          averaging the distance between the regression line and the equity curve the
+                                                          regression line is fitted to. At a glance, this provides insight into how well
+                                                          the regression line describes the equity curve. Generally speaking, the higher
+                                                          the number, the choppier the equity curve will be. The lower the number, the
+                                                          smoother the equity curve is. When combined with the Equity Curve Regression
+                                                          Slope, you can come to a general conclusion about the general direction, and
+                                                          how choppy the equity curve is.
+                                                      </p>
+                                                  </div>
+                                                  <div class="row">
+                                                      <a href="{% static 'images/interpreting_results_images/regression_errors.png' %}" target="_blank">
+                                                          <img src="{% static 'images/interpreting_results_images/regression_errors.png' %}" class="img-fluid rounded mx-auto d-block">
+                                                      </a>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kelly Criterion               -->
+                <div class="row">
+                    <div class="col-12 d-flex">
+                        <div class="card flex-fill">
+                            <div class="card-body">
+                                <div class="mb-0">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="heading17">
+                                            <a class="nav-link dropdown-toggle" id="alertsDropdown" data-bs-toggle="collapse" data-bs-target="#collapse17" aria-expanded="true" aria-controls="collapse17">
+                                                <span class="text-dark">Kelly Criterion</span>
+							                </a>
+                                            <hr>
+                                        </h2>
+                                        <div id="collapse17" class="accordion-collapse collapse show" aria-labelledby="heading17" data-bs-parent="#EvalsAccordion">
+                                          <div class="accordion-body">
+                                              <p>Is a formula originally developed for bet sizing, but applies equally well for trading.
+                                                  Kelly Criterion tells you the position sizes you should be taking on your next trade.
+                                                  If the number is negative, you should avoid devoting any capital to the strategy. If
+                                                  its positive, this signifies the amount of your total capital that should be devoted
+                                                  to the next trade. For example, if Kelly Criterion reads 0.20 this means you can put
+                                                  20% of your capital into the next trade. Basically, Kelly Criterion is a mathematical
+                                                  bet optimization formula that allows you take full advantage of winning streaks by
+                                                  increasing your bet size while negating your downside by cutting your bet size when
+                                                  you're on a losing streak. You can read about the formula and description
+                                                  <a href="https://corporatefinanceinstitute.com/resources/knowledge/trading-investing
+                                                  /kelly-criterion/">here</a>.
+                                              </p>
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row text-muted">
+
+                <div class="col-6 text-start">
+<!--                    <p class="mb-0">-->
+<!--                        <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>AdminKit</strong></a> &copy;-->
+<!--                    </p>-->
+                </div>
+                <div class="col-6 text-end">
+<!--                    <ul class="list-inline">-->
+<!--                        <li class="list-inline-item">-->
+<!--                            <a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>-->
+<!--                        </li>-->
+<!--                        <li class="list-inline-item">-->
+<!--                            <a class="text-muted" href="https://adminkit.io/" target="_blank">Help Center</a>-->
+<!--                        </li>-->
+<!--                        <li class="list-inline-item">-->
+<!--                            <a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>-->
+<!--                        </li>-->
+<!--                        <li class="list-inline-item">-->
+<!--                            <a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+{% endblock content %}

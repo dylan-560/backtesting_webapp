@@ -1,0 +1,293 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+{% include 'sidebar.html' %}
+
+<div class="main">
+    <nav class="navbar navbar-expand navbar-light navbar-bg">
+                    <a class="sidebar-toggle js-sidebar-toggle">
+                      <i class="hamburger align-self-center"></i>
+                    </a>
+
+<!--                    <div class="navbar-collapse collapse">-->
+<!--                        <ul class="navbar-nav navbar-align">-->
+<!--                            <li class="nav-item dropdown">-->
+<!--                                <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-bs-toggle="dropdown">-->
+<!--                                    <div class="position-relative">-->
+<!--                                        <i class="align-middle" data-feather="bell"></i>-->
+<!--                                        <span class="indicator">4</span>-->
+<!--                                    </div>-->
+<!--                                </a>-->
+<!--                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="alertsDropdown">-->
+<!--                                    <div class="dropdown-menu-header">-->
+<!--                                        4 New Notifications-->
+<!--                                    </div>-->
+<!--                                    <div class="list-group">-->
+<!--                                        <a href="#" class="list-group-item">-->
+<!--                                            <div class="row g-0 align-items-center">-->
+<!--                                                <div class="col-2">-->
+<!--                                                    <i class="text-danger" data-feather="alert-circle"></i>-->
+<!--                                                </div>-->
+<!--                                                <div class="col-10">-->
+<!--                                                    <div class="text-dark">Update completed</div>-->
+<!--                                                    <div class="text-muted small mt-1">Restart server 12 to complete the update.</div>-->
+<!--                                                    <div class="text-muted small mt-1">30m ago</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                        <a href="#" class="list-group-item">-->
+<!--                                            <div class="row g-0 align-items-center">-->
+<!--                                                <div class="col-2">-->
+<!--                                                    <i class="text-warning" data-feather="bell"></i>-->
+<!--                                                </div>-->
+<!--                                                <div class="col-10">-->
+<!--                                                    <div class="text-dark">Lorem ipsum</div>-->
+<!--                                                    <div class="text-muted small mt-1">Aliquam ex eros, imperdiet vulputate hendrerit et.</div>-->
+<!--                                                    <div class="text-muted small mt-1">2h ago</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                        <a href="#" class="list-group-item">-->
+<!--                                            <div class="row g-0 align-items-center">-->
+<!--                                                <div class="col-2">-->
+<!--                                                    <i class="text-primary" data-feather="home"></i>-->
+<!--                                                </div>-->
+<!--                                                <div class="col-10">-->
+<!--                                                    <div class="text-dark">Login from 192.186.1.8</div>-->
+<!--                                                    <div class="text-muted small mt-1">5h ago</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                        <a href="#" class="list-group-item">-->
+<!--                                            <div class="row g-0 align-items-center">-->
+<!--                                                <div class="col-2">-->
+<!--                                                    <i class="text-success" data-feather="user-plus"></i>-->
+<!--                                                </div>-->
+<!--                                                <div class="col-10">-->
+<!--                                                    <div class="text-dark">New connection</div>-->
+<!--                                                    <div class="text-muted small mt-1">Christina accepted your request.</div>-->
+<!--                                                    <div class="text-muted small mt-1">14h ago</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                    </div>-->
+<!--                                    <div class="dropdown-menu-footer">-->
+<!--                                        <a href="#" class="text-muted">Show all notifications</a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                            <li class="nav-item dropdown">-->
+<!--                                <a class="nav-icon dropdown-toggle" href="#" id="messagesDropdown" data-bs-toggle="dropdown">-->
+<!--                                    <div class="position-relative">-->
+<!--                                        <i class="align-middle" data-feather="message-square"></i>-->
+<!--                                    </div>-->
+<!--                                </a>-->
+<!--                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0" aria-labelledby="messagesDropdown">-->
+<!--                                    <div class="dropdown-menu-header">-->
+<!--                                        <div class="position-relative">-->
+<!--                                            4 New Messages-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="list-group">-->
+<!--                                        <a href="#" class="list-group-item">-->
+<!--                                            <div class="row g-0 align-items-center">-->
+<!--                                                <div class="col-2">-->
+<!--                                                    <img src="img/avatars/avatar-5.jpg" class="avatar img-fluid rounded-circle" alt="Vanessa Tucker">-->
+<!--                                                </div>-->
+<!--                                                <div class="col-10 ps-2">-->
+<!--                                                    <div class="text-dark">Vanessa Tucker</div>-->
+<!--                                                    <div class="text-muted small mt-1">Nam pretium turpis et arcu. Duis arcu tortor.</div>-->
+<!--                                                    <div class="text-muted small mt-1">15m ago</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                        <a href="#" class="list-group-item">-->
+<!--                                            <div class="row g-0 align-items-center">-->
+<!--                                                <div class="col-2">-->
+<!--                                                    <img src="img/avatars/avatar-2.jpg" class="avatar img-fluid rounded-circle" alt="William Harris">-->
+<!--                                                </div>-->
+<!--                                                <div class="col-10 ps-2">-->
+<!--                                                    <div class="text-dark">William Harris</div>-->
+<!--                                                    <div class="text-muted small mt-1">Curabitur ligula sapien euismod vitae.</div>-->
+<!--                                                    <div class="text-muted small mt-1">2h ago</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                        <a href="#" class="list-group-item">-->
+<!--                                            <div class="row g-0 align-items-center">-->
+<!--                                                <div class="col-2">-->
+<!--                                                    <img src="img/avatars/avatar-4.jpg" class="avatar img-fluid rounded-circle" alt="Christina Mason">-->
+<!--                                                </div>-->
+<!--                                                <div class="col-10 ps-2">-->
+<!--                                                    <div class="text-dark">Christina Mason</div>-->
+<!--                                                    <div class="text-muted small mt-1">Pellentesque auctor neque nec urna.</div>-->
+<!--                                                    <div class="text-muted small mt-1">4h ago</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                        <a href="#" class="list-group-item">-->
+<!--                                            <div class="row g-0 align-items-center">-->
+<!--                                                <div class="col-2">-->
+<!--                                                    <img src="img/avatars/avatar-3.jpg" class="avatar img-fluid rounded-circle" alt="Sharon Lessman">-->
+<!--                                                </div>-->
+<!--                                                <div class="col-10 ps-2">-->
+<!--                                                    <div class="text-dark">Sharon Lessman</div>-->
+<!--                                                    <div class="text-muted small mt-1">Aenean tellus metus, bibendum sed, posuere ac, mattis non.</div>-->
+<!--                                                    <div class="text-muted small mt-1">5h ago</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </a>-->
+<!--                                    </div>-->
+<!--                                    <div class="dropdown-menu-footer">-->
+<!--                                        <a href="#" class="text-muted">Show all messages</a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                            <li class="nav-item dropdown">-->
+<!--                                <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">-->
+<!--                    <i class="align-middle" data-feather="settings"></i>-->
+<!--                  </a>-->
+
+<!--                                <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">-->
+<!--                    <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span class="text-dark">Charles Hall</span>-->
+<!--                  </a>-->
+<!--                                <div class="dropdown-menu dropdown-menu-end">-->
+<!--                                    <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>-->
+<!--                                    <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>-->
+<!--                                    <div class="dropdown-divider"></div>-->
+<!--                                    <a class="dropdown-item" href="index.html"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>-->
+<!--                                    <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>-->
+<!--                                    <div class="dropdown-divider"></div>-->
+<!--                                    <a class="dropdown-item" href="#">Log out</a>-->
+<!--                                </div>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+                </nav>
+
+    <main class="content">
+        <div style="height:97%;" class="container-fluid p-0">
+
+            <h1 class="h3 mb-3"><strong>Methodology</strong></h1>
+
+            <div style="height:97%;" class="row">
+                <div class="col-12 d-flex">
+                    <div class="card flex-fill">
+                        <div class="card-body">
+                            <div class="mb-0">
+                                <h3>Languages:</h3>
+                                <p>
+                                    Everything here is written in python, stored in a MYSQL database, and
+                                    displayed with django.
+                                </p>
+                                <h3>Individual Backtests:</h3>
+                                <p>
+                                    Each backtest is done by taking OHLC price data for a specific asset
+                                    (as a dataframe) and applying a strategy algorithm which generates of a list of
+                                    . That list of trades is then used to generate a list of evaluation metrics (link)
+                                    which are used to gauge the performance of the backtest. Some pieces of a strategy
+                                    may use high/low prices as triggers or to generate some evaluation metrics.
+                                    However, as things are now, all entries/exits are based on closing prices.
+                                    Loss exits are recorded as the first closing price that breaks outside risk
+                                    range. Profit exits are recorded as the first closing price that breaks profit
+                                    targets (for strategies use profit targets) or the first closing price after an
+                                    exit signal (for strategies that don't use profit targets). I understand using
+                                    close prices may hurt performance (as some trades may have crazy stop loss
+                                    slippage or may not take profit exits that would have otherwise been triggered by
+                                    high/low prices) however I feel this serves as an adequate handicap to make
+                                    returns more realistic. Additionally I did write something to account for
+                                    slippage, commission, and interest rate carry, although this is not implemented
+                                    in the results.
+                                </p>
+                                <h3>Parameter Permutations:</h3>
+                                <p>
+                                    Creating permutations of parameters is based on the concept of taking a strategy
+                                    and viewing its performance given a spectrum of input parameters. To get this
+                                    spectrum, given X number of required parameters, a range of values is assigned
+                                    to each parameter and a list of permutations is generated. The strategy is then
+                                    run on selected price data for each item in that list of permutations.
+                                    <br><br>
+                                    For example if strategy X takes input parameters A,B and C, then a range of
+                                    values is assigned to each parameter. So:
+                                </p>
+                                <ul>
+                                    <li>A gets [30,31,32 ... 100]</li>
+                                    <li>B gets [10,11,12 ... 30]</li>
+                                    <li>C gets [5,6,7 ... 15]</li>
+                                </ul>
+                                <p>
+                                    Then a list of permutations, or unique combinations of parameters inputs, is
+                                    generated which looks something like:
+                                </p>
+                                <ul>
+                                    <li>{A:30,B:10,C:5} </li>
+                                    <li>{A:31, B:10, C:5}</li>
+                                    <li>{A:32, B:10, C:5}</li>
+                                    <li>...</li>
+                                    <li>{A:100, B:30, C:15}</li>
+                                </ul>
+                                <p>
+                                    Strategy X is then run on selected price data for each item in that list of
+                                    parameter inputs.
+                                    <br><br>
+                                    Obviously this method of brute force testing has its limits. First and foremost
+                                    being limitations on the number of permutations that can be tested in a timely
+                                    manner. Depending on the number of parameters as well as the length of the range
+                                    each parameter is assigned, the total number of permutations can reach well into
+                                    the hundreds of millions. Even after optimizing the code for speed and setting it
+                                    up to run in parallel via multiprocessing, python is still python and python is
+                                    slow.
+                                    <br><br>
+                                    To account for this, parameter ranges are spaced out in increments, i.e if the
+                                    range is [1,2,3,4...100] the new range will be [1,5,10,15...100]. This vastly
+                                    cuts down on the number of permutations while still yielding enough of a spectrum
+                                    of parameter inputs to provide a good insight into whats working and what isn't.
+                                </p>
+                                <h3>Timeframes and Assets:</h3>
+                                <p>
+                                    To cut down on the total number of backtests and reduce the run time needed to
+                                    update the results, all strategies are run on a 1 hour timeframe
+                                    (i.e 1 candle represents 1 hour). Backtests are run over a 1 month of time
+                                    (for both the current month and previous month). The number of assets is also
+                                    limited to a handful of tickers from forex, crypto and equity indices.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row text-muted">
+                <div class="col-6 text-start">
+<!--                    <p class="mb-0">-->
+<!--                        <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>AdminKit</strong></a> &copy;-->
+<!--                    </p>-->
+                </div>
+                <div class="col-6 text-end">
+<!--                    <ul class="list-inline">-->
+<!--                        <li class="list-inline-item">-->
+<!--                            <a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>-->
+<!--                        </li>-->
+<!--                        <li class="list-inline-item">-->
+<!--                            <a class="text-muted" href="https://adminkit.io/" target="_blank">Help Center</a>-->
+<!--                        </li>-->
+<!--                        <li class="list-inline-item">-->
+<!--                            <a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>-->
+<!--                        </li>-->
+<!--                        <li class="list-inline-item">-->
+<!--                            <a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+{% endblock content %}

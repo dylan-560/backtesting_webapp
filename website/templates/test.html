@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <h2>Strategies sidebar</h2>
+               <ul>
+               {% for s in all_strats_dict %}
+
+                    <li><a href="{% url 'test' s.strategy_name|slugify current_asset_dict.asset_name|slugify %}"> {{ s.strategy_name }} </a></li>
+
+
+               {% endfor %}
+               </ul>
+    --------------------------------------------------
+
+    <h2>Current Strat data</h2>
+    <ul>
+               <li>{{ current_strat_dict.strategy_id }}</li>
+               <li>{{ current_strat_dict.strategy_name }}</li>
+               <li>for {{ current_asset_dict.asset_name }}</li>
+               <li>for {{ timeframe }} </li>
+               <li>{{ current_strat_dict.strategy_description }}</li>
+
+    </ul>
+    <h2>Active Assets lists sidebar</h2>
+               <ul>
+               {% for a in all_assets_dict %}
+
+                    <li>id:{{ a.asset_id }} name: {{ a.asset_name }} </li>
+
+               {% endfor %}
+               </ul>
+
+    <h2>Current month results</h2> {{ current_month_data.start_date }} to {{ current_month_data.end_date }}
+        <h3>Top Winning Permutations</h3>
+        <ul>
+
+
+                {% for t in current_month_data.top_winning_strats %}
+                    <li>id {{ t.strat_parameters_id }}
+                        Total R {{ t.total_realized_r }}
+                        Strike Rate {{ t.strike_rate }}
+                        Expectancy {{ t.expectancy }}
+                        Num Trades {{ t.num_trades }}
+                        <a href="{% url 'Evaluation Results' t.strat_parameters_id %}"> ...more </a>
+                    </li>
+                {% endfor %}
+        </ul>
+        <h3>Top Losing Permutations</h3>
+        <ul>
+                {% for t in current_month_data.top_losing_strats %}
+                    <li>id {{ t.strat_parameters_id }}
+                        Total R {{ t.total_realized_r }}
+                        Strike Rate {{ t.strike_rate }}
+                        Expectancy {{ t.expectancy }}
+                        Num Trades {{ t.num_trades }}
+                        <a href="{% url 'Evaluation Results' t.strat_parameters_id %}"> ...more </a>
+                    </li>
+                {% endfor %}
+        </ul>
+
+    <h2>Previous month results</h2>
+         <h3>Top Winning Permutations</h3>
+        <ul>
+
+
+                {% for t in previous_month_data.top_winning_strats %}
+                    <li>id {{ t.strat_parameters_id }}
+                        Total R {{ t.total_realized_r }}
+                        Strike Rate {{ t.strike_rate }}
+                        Expectancy {{ t.expectancy }}
+                        Num Trades {{ t.num_trades }}
+                        <a href="{% url 'Evaluation Results' t.strat_parameters_id %}"> ...more </a>
+                    </li>
+
+                {% endfor %}
+        </ul>
+        <h3>Top Losing Permutations</h3>
+        <ul>
+                {% for t in previous_month_data.top_losing_strats %}
+                    <li>id {{ t.strat_parameters_id }}
+                        Total R {{ t.total_realized_r }}
+                        Strike Rate {{ t.strike_rate }}
+                        Expectancy {{ t.expectancy }}
+                        Num Trades {{ t.num_trades }}
+                        <a href="{% url 'Evaluation Results' t.strat_parameters_id %}"> ...more </a>
+                    </li>
+                {% endfor %}
+        </ul>
+
+</div>
+
+{% endblock content %}
