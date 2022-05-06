@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CsvFileAttributes">
+    <option name="attributeMap">
+      <map>
+        <entry key="\website\data\candle_data\EUR_USD.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\website\data\eval_metrics\basic_X_MA_crossover_V1\ETH-USD\basic_X_MA_crossover_V1_ETH-USD_currmonth_bottomresults.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\website\data\eval_metrics\basic_X_MA_crossover_V1\EUR_USD\basic_X_MA_crossover_V1_EUR_USD_currmonth_bottomresults.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\website\data\eval_metrics\basic_X_MA_crossover_V1\EUR_USD\basic_X_MA_crossover_V1_EUR_USD_prevmonth_topresults.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

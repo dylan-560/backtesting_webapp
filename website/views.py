@@ -1,4 +1,6 @@
 from datetime import datetime, timedelta
+
+import pandas as pd
 from django.shortcuts import render
 from website.models import Assets,Strategies,EvaluationMetrics ,AssetsOHLCV
 #from django_tut_2.settings import STRAT_EXAMPLE_IMAGE_PATH
@@ -72,84 +74,160 @@ def strategy_backtests(request, strat_name, asset_ticker):
             - total realized R, strike rate, num trades
     """
 
-    def get_eval_results_for_month(start_date, end_date):
+    def pull_from_locals(strat_name, asset_ticker):
 
-        # print('period start date',period_start_date)
-        # print('period end date', period_end_date)
+        root_data_dir = os.path.join('website','data')
 
-        eval_metrics_qs = EvaluationMetrics.objects.values(
-            'strat_parameters_id',
-            'total_realized_r',
-            'strike_rate',
-            'expectancy',
-            'num_trades')
+        def get_eval_results_for_month(month):
+            """
+            month: currmonth/prevmonth
+            """
 
-        eval_metrics_qs = eval_metrics_qs.filter(strat_id=current_strat_dict['strategy_id'],
-                               asset_id=current_asset_dict['asset_id'],
-                               period_end_date__date__lte=end_date,
-                               period_start_date__date__gte=start_date)
+            def pull_x_results(position):
+                """
+                position:bottomresults/topresults
+                """
+                filename = strat_name + '_' + asset_ticker + '_' + month + '_' + position + '.csv'
+                filepath = os.path.join(root_data_dir, 'eval_metrics', strat_name, asset_ticker)
+                df = pd.read_csv(os.path.join(filepath, filename))
+                total_count = 0
+                try:
+                    total_count = df['total_count'].values[-1]
+                except IndexError:
+                    pass
+
+                df = df.drop('total_count', axis='columns')
+                ret_dict = df.to_dict('records')
+
+                return ret_dict, total_count
+
+            top_dict, count = pull_x_results(position='topresults')
+            bottom_dict, _ = pull_x_results(position='bottomresults')
+            return top_dict, bottom_dict, count
+
+        ##################################################################
+
+        strat_name = strat_name.replace('-', '_').lower()
+        asset_ticker = asset_ticker.replace('-', '_').upper()
+
+        # load in strats info
+        all_strats_dict = pd.read_csv(os.path.join(root_data_dir, 'strategies_info/all_strats_info.csv')).to_dict(
+            'records')
+        all_assets_dict = pd.read_csv(os.path.join(root_data_dir, 'asset_info/all_asset_info.csv')).to_dict('records')
+
+        strats_sidebar_list = [item['strategy_reference'].replace('_', ' ').upper() for item in all_strats_dict]
+
+        current_strat_dict = [item for item in all_strats_dict if item['strategy_reference'].lower() == strat_name][0]
+        current_asset_dict = [item for item in all_assets_dict if item['asset_ticker'] == asset_ticker][0]
+
+        month_0_end = datetime.today().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        month_0_start = (month_0_end - timedelta(days=1)).replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        month_1_end = month_0_start
+        month_1_start = (month_1_end - timedelta(days=1)).replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+
+        get_eval_results_for_month(month='prevmonth')
+
+        curr_month_top_dict, curr_month_bottom_dict, curr_count = get_eval_results_for_month(month='currmonth')
+        prev_month_top_dict, prev_month_bottom_dict, prev_count = get_eval_results_for_month(month='prevmonth')
+
+        strat_image_path = STRAT_EXAMPLE_IMAGE_PATH + current_strat_dict['strategy_reference'].lower() + '.png'
+
+        return {'strats_sidebar_list': strats_sidebar_list,
+                   'sidebar_default_asset': all_assets_dict[0]['asset_ticker'],
+                   'all_assets_list_dict': all_assets_dict,
+                   'current_strat_dict': current_strat_dict,
+                   'current_asset_dict': current_asset_dict,
+                   'timeframe': '1 Hour Candles',
+                   'strat_image_path': strat_image_path,
+                   'current_month_data': {'start_date': str(month_0_start).split(' ')[0],
+                                          'end_date': str(month_0_end).split(' ')[0],
+                                          'top_winning_strats': curr_month_top_dict,
+                                          'top_losing_strats': curr_month_bottom_dict,
+                                          'count': curr_count},
+
+                   'previous_month_data': {'start_date': str(month_1_start).split(' ')[0],
+                                           'end_date': str(month_1_end).split(' ')[0],
+                                           'top_winning_strats': prev_month_top_dict,
+                                           'top_losing_strats': prev_month_bottom_dict,
+                                           'count': prev_count},
+                   }
+
+    def pull_from_queryset(strat_name, asset_ticker):
+
+        def get_eval_results_for_month(start_date, end_date):
+
+            # print('period start date',period_start_date)
+            # print('period end date', period_end_date)
+
+            eval_metrics_qs = EvaluationMetrics.objects.values(
+                'strat_parameters_id',
+                'total_realized_r',
+                'strike_rate',
+                'expectancy',
+                'num_trades')
+
+            eval_metrics_qs = eval_metrics_qs.filter(strat_id=current_strat_dict['strategy_id'],
+                                   asset_id=current_asset_dict['asset_id'],
+                                   period_end_date__date__lte=end_date,
+                                   period_start_date__date__gte=start_date)
 
 
-        total_count = eval_metrics_qs.count()
+            total_count = eval_metrics_qs.count()
 
-        bottom_x_results_dict = eval_metrics_qs.order_by('total_realized_r')[:5]
-        top_x_results_dict = eval_metrics_qs.order_by('-total_realized_r')[:5]
+            bottom_x_results_dict = eval_metrics_qs.order_by('total_realized_r')[:5]
+            top_x_results_dict = eval_metrics_qs.order_by('-total_realized_r')[:5]
 
-        return top_x_results_dict, bottom_x_results_dict,total_count
+            return top_x_results_dict, bottom_x_results_dict,total_count
 
-    ##########################################################
+        ##########################################################
 
-    # TODO consider making 2 queries for 1: just strategy names and 2: for the select strategy you want to avoid pulling extra data
-    #                   (since your going to be putting example pics into the database)
-    # TODO split assets in subgroups (i.e FOREX, Crypto, Equities), need to update models/migrations for "market" field
+        strat_name = strat_name.replace('-','_').lower()
+        asset_ticker = asset_ticker.upper()
 
-    strat_name = strat_name.replace('-','_').lower()
-    asset_ticker = asset_ticker.upper()
+        all_assets_list_dict = Assets.objects.all().values()
+        current_asset_dict = [item for item in all_assets_list_dict if item['asset_ticker'] == asset_ticker][0]
 
-    all_assets_list_dict = Assets.objects.all().values()
-    current_asset_dict = [item for item in all_assets_list_dict if item['asset_ticker'] == asset_ticker][0]
+        all_strats_list_dict = Strategies.objects.all().values()
+        current_strat_dict = [item for item in all_strats_list_dict if item['strategy_reference'].lower() == strat_name][0]
+        strats_sidebar_list = [item['strategy_reference'].replace('_', ' ').upper() for item in all_strats_list_dict]
 
+        month_0_end = datetime.today().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        month_0_start = (month_0_end - timedelta(days=1)).replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        month_1_end = month_0_start
+        month_1_start = (month_1_end - timedelta(days=1)).replace(day=1, hour=0, minute=0, second=0, microsecond=0)
 
+        curr_month_top_results_dict, curr_month_bottom_results_dict,curr_month_perms_count = get_eval_results_for_month(start_date=month_0_start,
+                                                                                                 end_date=month_0_end)
 
-    all_strats_list_dict = Strategies.objects.all().values()
-    current_strat_dict = [item for item in all_strats_list_dict if item['strategy_reference'].lower() == strat_name][0]
-    print(current_strat_dict)
-    strats_sidebar_list = [item['strategy_reference'].replace('_', ' ').upper() for item in all_strats_list_dict]
+        prev_month_top_results_dict, prev_month_bottom_results_dict,prev_month_perms_count = get_eval_results_for_month(start_date=month_1_start,
+                                                                                                                        end_date=month_1_end)
 
-    month_0_end = datetime.today().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-    month_0_start = (month_0_end - timedelta(days=1)).replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-    month_1_end = month_0_start
-    month_1_start = (month_1_end - timedelta(days=1)).replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        strat_image_path = STRAT_EXAMPLE_IMAGE_PATH+current_strat_dict['strategy_reference'].lower()+'.png'
 
-    curr_month_top_results_dict, curr_month_bottom_results_dict,curr_month_perms_count = get_eval_results_for_month(start_date=month_0_start,
-                                                                                             end_date=month_0_end)
+        ###########################################################################################################
 
-    prev_month_top_results_dict, prev_month_bottom_results_dict,prev_month_perms_count = get_eval_results_for_month(start_date=month_1_start,
-                                                                                                                    end_date=month_1_end)
+        return {'strats_sidebar_list':strats_sidebar_list,
+                   'sidebar_default_asset':all_assets_list_dict[0]['asset_ticker'],
+                   'all_assets_list_dict':all_assets_list_dict,
+                   'current_strat_dict':current_strat_dict,
+                   'current_asset_dict':current_asset_dict,
+                   'timeframe':'1 Hour Candles',
+                   'strat_image_path':strat_image_path,
+                   'current_month_data':{'start_date':str(month_0_start).split(' ')[0],
+                                         'end_date':str(month_0_end).split(' ')[0],
+                                         'top_winning_strats':curr_month_top_results_dict,
+                                         'top_losing_strats':curr_month_bottom_results_dict,
+                                         'count':curr_month_perms_count},
 
-    strat_image_path = STRAT_EXAMPLE_IMAGE_PATH+current_strat_dict['strategy_reference'].lower()+'.png'
+                   'previous_month_data':{'start_date':str(month_1_start).split(' ')[0],
+                                         'end_date':str(month_1_end).split(' ')[0],
+                                         'top_winning_strats':prev_month_top_results_dict,
+                                         'top_losing_strats':prev_month_bottom_results_dict,
+                                          'count':prev_month_perms_count},
+                   }
 
-    ###########################################################################################################
-
-    context = {'strats_sidebar_list':strats_sidebar_list,
-               'sidebar_default_asset':all_assets_list_dict[0]['asset_ticker'],
-               'all_assets_list_dict':all_assets_list_dict,
-               'current_strat_dict':current_strat_dict,
-               'current_asset_dict':current_asset_dict,
-               'timeframe':'1 Hour Candles',
-               'strat_image_path':strat_image_path,
-               'current_month_data':{'start_date':str(month_0_start).split(' ')[0],
-                                     'end_date':str(month_0_end).split(' ')[0],
-                                     'top_winning_strats':curr_month_top_results_dict,
-                                     'top_losing_strats':curr_month_bottom_results_dict,
-                                     'count':curr_month_perms_count},
-
-               'previous_month_data':{'start_date':str(month_1_start).split(' ')[0],
-                                     'end_date':str(month_1_end).split(' ')[0],
-                                     'top_winning_strats':prev_month_top_results_dict,
-                                     'top_losing_strats':prev_month_bottom_results_dict,
-                                      'count':prev_month_perms_count},
-               }
+    #context = pull_from_queryset(strat_name=strat_name, asset_ticker=asset_ticker)
+    context = pull_from_locals(strat_name=strat_name, asset_ticker=asset_ticker)
 
     return render(request,'backtests.html',context)
 
@@ -158,11 +236,26 @@ def strategy_backtest_default(request):
     meant to appear as the "backtests" link on the navbar and get the first strategy and asset items as a default
     to take you to the backtests results page
     """
-    all_strats_qs = Strategies.objects.filter(pk=1).values('strategy_reference')
-    default_strat = [item['strategy_reference'] for item in all_strats_qs][0]
+    def pull_from_locals():
+        root_data_dir = os.path.join('website', 'data')
 
-    all_assets_qs = Assets.objects.filter(pk=1).values('asset_ticker')
-    default_asset = [item['asset_ticker'] for item in all_assets_qs][0]
+        all_strats_dict = pd.read_csv(os.path.join(root_data_dir, 'strategies_info/all_strats_info.csv')).to_dict('records')
+        all_assets_dict = pd.read_csv(os.path.join(root_data_dir, 'asset_info/all_asset_info.csv')).to_dict('records')
+        default_strat = all_strats_dict[0]['strategy_reference']
+        default_asset = all_assets_dict[0]['asset_ticker']
+        return default_strat, default_asset
+
+    def pull_from_queryset():
+        all_strats_qs = Strategies.objects.filter(pk=1).values('strategy_reference')
+        default_strat = [item['strategy_reference'] for item in all_strats_qs][0]
+
+        all_assets_qs = Assets.objects.filter(pk=1).values('asset_ticker')
+        default_asset = [item['asset_ticker'] for item in all_assets_qs][0]
+
+        return default_strat,default_asset
+
+    # default_strat, default_asset = pull_from_queryset()
+    default_strat, default_asset = pull_from_locals()
 
     return strategy_backtests(request,default_strat,default_asset)
 
@@ -179,6 +272,7 @@ def individual_results(request,strat_name,asset_ticker,perm_id):
         - list of all trades for that strategy
 
     """
+
     import plotly.graph_objects as go
     from plotly.subplots import make_subplots
     import pandas as pd
@@ -715,7 +809,9 @@ def individual_results(request,strat_name,asset_ticker,perm_id):
         return fig.to_html()
 
     def create_MFE_MAE_chart(perm_dict):
-
+        print('--------------------------------------')
+        print(perm_dict)
+        print('--------------------------------------')
         def bin_df(base_df, bins=32):
 
             def get_x_axis(df, title):
@@ -1020,127 +1116,280 @@ def individual_results(request,strat_name,asset_ticker,perm_id):
 
     def filter_candle_df_by_dates(df,start_date,end_date):
 
-        for d in [start_date,end_date]:
-            if not isinstance(d,datetime):
-                start_date = datetime.strptime(d,'%Y-%m-%d %H:%M:%S')
+
+        if not isinstance(start_date,datetime):
+            start_date = datetime.strptime(start_date,'%Y-%m-%d')
+
+        if not isinstance(end_date,datetime):
+            end_date = datetime.strptime(end_date,'%Y-%m-%d')
 
         df['Date_Time'] = pd.to_datetime(df['Date_Time'])
         df = df.loc[(df['Date_Time'] >= start_date) & (df['Date_Time'] <= end_date)]
         return df
 
     ##########################################################################################################
-    print(strat_name)
-    print(asset_ticker)
-    print(perm_id)
-    print('---------------------------------------------------------------')
-    print('---------------------------------------------------------------')
-    print('---------------------------------------------------------------')
 
-    all_strats_qs = Strategies.objects.all().values('strategy_reference')
-    all_strats = [item['strategy_reference'].replace('_', ' ').upper() for item in all_strats_qs]
+    def pull_from_locals(strat_name, asset_ticker, perm_id):
+        import ast
+        root_data_dir = os.path.join('website', 'data')
 
-    default_asset_qs = Assets.objects.filter(pk=1).values('asset_ticker')
+        def find_perm_from_id():
+            postfix_list = ['currmonth_topresults.csv',
+                            'currmonth_bottomresults.csv',
+                            'prevmonth_topresults.csv',
+                            'prevmonth_bottomresults.csv']
 
-    # data for x permutation
-    perm_details_dict = EvaluationMetrics.objects.filter(pk=perm_id).values()[0]
+            for pf in postfix_list:
+                filename = current_strat_dict['strategy_reference'].lower() + '_' + asset_ticker + '_' + pf
+                filepath = os.path.join(root_data_dir, 'eval_metrics', current_strat_dict['strategy_reference'].lower(), asset_ticker)
+                perms_df = pd.read_csv(os.path.join(filepath, filename))
+                perms_df = perms_df[perms_df['strat_parameters_id'] == perm_id]
+                if not perms_df.empty:
+                    perms_dict = perms_df.to_dict('records')
+                    return perms_dict[0]
 
-    # get candle data and put into dataframe
-    asset_ohlcv_data_qs = AssetsOHLCV.objects.filter(asset_ticker_identification=perm_details_dict['asset_id'],
-                                               datetime__range=(perm_details_dict['period_start_date'],
-                                                                perm_details_dict['period_end_date']))
+        def convert_perm_details_keys_to_lower(perm_dict):
 
-    asset_ohlcv_data_qs = AssetsOHLCV.objects.all()
-    candle_data_df = pd.DataFrame(asset_ohlcv_data_qs.values('datetime', 'open', 'high', 'low', 'close', 'volume'))
-    candle_data_df = clean_DB_to_DF(df=candle_data_df)
-    candle_data_df = filter_candle_df_by_dates(df=candle_data_df,
-                                               start_date=perm_details_dict['period_start_date'],
-                                               end_date=perm_details_dict['period_end_date'])
+            ret_dict = {}
+            for k,v in perm_dict.items():
+                ret_dict[k.lower()] = v
 
-    current_strat_dict = Strategies.objects.filter(strategy_id=perm_details_dict['strat_id']).values()[0]
-    print(current_strat_dict)
-    # get info the strategy responsible for that permutation
-    # current_strat_dict = list(filter(lambda strat: strat['strategy_id'] == perm_details_dict['strat_id'], strategy_dict))[0]
+            return ret_dict
+        ##################################################################
 
-    # set up the annotated candlestick chart
-    candle_chart = create_trades_chart(candle_data_df=candle_data_df,
-                                   trade_data=convert_json(x=perm_details_dict['trades_list']),
-                                   strat_params=convert_json(x=perm_details_dict['strategy_params']))
+        asset_ticker = asset_ticker.replace('-','_').upper()
 
-    # set up the equity curve chart
-    equity_curve_chart = create_equity_curve_chart(candle_data_df=candle_data_df,
-                                                  trade_data=convert_json(x=perm_details_dict['trades_list']))
+        # load in strats info
+        all_strats_dict = pd.read_csv(os.path.join(root_data_dir, 'strategies_info/all_strats_info.csv')).to_dict('records')
 
-    MAE_MFE_charts = create_MFE_MAE_chart(perm_dict=perm_details_dict)
+        all_assets_dict = pd.read_csv(os.path.join(root_data_dir, 'asset_info/all_asset_info.csv')).to_dict('records')
 
-    # convert strat params into a more readable format
-    strategy_params = translate_strat_params(strategy_params=perm_details_dict['strategy_params'])
+        strats_sidebar_list = [item['strategy_name'].replace('_', ' ').upper() for item in all_strats_dict]
 
-    # filters out metrics that arent relevant to strategy evaluation
-    evaluation_metrics = filter_evaluation_metrics(all_metrics=perm_details_dict)
-    evaluation_metrics = translate_eval_metrics(metrics=evaluation_metrics)
-    # print(evaluation_metrics)
-    ####################################################################################################################
+        current_strat_dict = [item for item in all_strats_dict if item['strategy_name'].lower() == strat_name.replace('-',' ')][0]
 
-    context = {'strats_sidebar_list':all_strats,
-               'sidebar_default_asset': default_asset_qs[0]['asset_ticker'],
-               'start_date':str(perm_details_dict['period_start_date']).split(' ')[0],
-               'end_date':str(perm_details_dict['period_end_date']).split(' ')[0],
-               'current_strat_dict':current_strat_dict,
-               'strategy_params':strategy_params,
-               'trades_list_titles':['Trade Num','Bias','Entry Price','Risk Price','Exit Price',
-                                     'Entry Date','Exit Date','R Profit','Cumulative R'],
-               'trades_list':perm_details_dict['trades_list'],
-               'evaluation_metrics':evaluation_metrics,
-               'candle_chart':candle_chart,
-               'equity_curve_chart':equity_curve_chart,
-               'excursion_charts':MAE_MFE_charts}
+        perm_details_dict = find_perm_from_id()
 
-    # #print('all_strats_dict',all_strategies_qs)
-    # print('------------------------------------------------')
-    # print('current strat dict', current_strat_dict)
-    # print('------------------------------------------------')
-    # print('perm details', perm_details_dict)
-    # print('------------------------------------------------')
+        candle_data_df = pd.read_csv(os.path.join(root_data_dir, 'candle_data', asset_ticker + '.csv'))
+
+        candle_data_df = clean_DB_to_DF(df=candle_data_df)
+        candle_data_df = filter_candle_df_by_dates(df=candle_data_df,
+                                                   start_date=perm_details_dict['period_start_date'],
+                                                   end_date=perm_details_dict['period_end_date'])
+
+        # convert strat params into a more readable format
+        perm_details_dict['strategy_params'] = ast.literal_eval(perm_details_dict['strategy_params'])
+        perm_details_dict['trades_list'] = ast.literal_eval(perm_details_dict['trades_list'])
+
+        strategy_params = translate_strat_params(strategy_params=perm_details_dict['strategy_params'])
+        evaluation_metrics = filter_evaluation_metrics(all_metrics=perm_details_dict)
+        evaluation_metrics = translate_eval_metrics(metrics=evaluation_metrics)
+
+        # set up the equity curve chart
+        equity_curve_chart = create_equity_curve_chart(candle_data_df=candle_data_df,
+                                                       trade_data=convert_json(x=perm_details_dict['trades_list']))
+
+        # set up the annotated candlestick chart
+        candle_chart = create_trades_chart(candle_data_df=candle_data_df,
+                                           trade_data=convert_json(x=perm_details_dict['trades_list']),
+                                           strat_params=convert_json(x=perm_details_dict['strategy_params']))
+
+        perm_details_dict = convert_perm_details_keys_to_lower(perm_dict=perm_details_dict)
+
+        MAE_MFE_charts = create_MFE_MAE_chart(perm_dict=perm_details_dict)
+
+        return {'strats_sidebar_list': strats_sidebar_list,
+                   'sidebar_default_asset': all_assets_dict[0]['asset_ticker'],
+                   'start_date': str(perm_details_dict['period_start_date']).split(' ')[0],
+                   'end_date': str(perm_details_dict['period_end_date']).split(' ')[0],
+                   'current_strat_dict': current_strat_dict,
+                   'strategy_params': strategy_params,
+                   'trades_list': perm_details_dict['trades_list'],
+                   'trades_list_titles': ['Trade Num', 'Bias', 'Entry Price', 'Risk Price', 'Exit Price',
+                                          'Entry Date', 'Exit Date', 'R Profit', 'Cumulative R'],
+                   'evaluation_metrics': evaluation_metrics,
+                   'candle_chart': candle_chart,
+                   'equity_curve_chart': equity_curve_chart,
+                   'excursion_charts': MAE_MFE_charts}
+
+    def pull_from_queryset(strat_name, asset_ticker, perm_id):
+
+        all_strats_qs = Strategies.objects.all().values('strategy_reference')
+        all_strats = [item['strategy_reference'].replace('_', ' ').upper() for item in all_strats_qs]
+
+        default_asset_qs = Assets.objects.filter(pk=1).values('asset_ticker')
+
+        # data for x permutation
+        perm_details_dict = EvaluationMetrics.objects.filter(pk=perm_id).values()[0]
+
+        # get candle data and put into dataframe
+        asset_ohlcv_data_qs = AssetsOHLCV.objects.filter(asset_ticker_identification=perm_details_dict['asset_id'],
+                                                   datetime__range=(perm_details_dict['period_start_date'],
+                                                                    perm_details_dict['period_end_date']))
+
+        asset_ohlcv_data_qs = AssetsOHLCV.objects.all()
+        candle_data_df = pd.DataFrame(asset_ohlcv_data_qs.values('datetime', 'open', 'high', 'low', 'close', 'volume'))
+        candle_data_df = clean_DB_to_DF(df=candle_data_df)
+        candle_data_df = filter_candle_df_by_dates(df=candle_data_df,
+                                                   start_date=perm_details_dict['period_start_date'],
+                                                   end_date=perm_details_dict['period_end_date'])
+
+        current_strat_dict = Strategies.objects.filter(strategy_id=perm_details_dict['strat_id']).values()[0]
+
+
+        # set up the annotated candlestick chart
+        candle_chart = create_trades_chart(candle_data_df=candle_data_df,
+                                       trade_data=convert_json(x=perm_details_dict['trades_list']),
+                                       strat_params=convert_json(x=perm_details_dict['strategy_params']))
+
+        # set up the equity curve chart
+        equity_curve_chart = create_equity_curve_chart(candle_data_df=candle_data_df,
+                                                      trade_data=convert_json(x=perm_details_dict['trades_list']))
+
+        MAE_MFE_charts = create_MFE_MAE_chart(perm_dict=perm_details_dict)
+
+        # convert strat params into a more readable format
+        strategy_params = translate_strat_params(strategy_params=perm_details_dict['strategy_params'])
+
+        # filters out metrics that arent relevant to strategy evaluation
+        evaluation_metrics = filter_evaluation_metrics(all_metrics=perm_details_dict)
+        evaluation_metrics = translate_eval_metrics(metrics=evaluation_metrics)
+        # print(evaluation_metrics)
+        ####################################################################################################################
+
+        return {'strats_sidebar_list':all_strats,
+                   'sidebar_default_asset': default_asset_qs[0]['asset_ticker'],
+                   'start_date':str(perm_details_dict['period_start_date']).split(' ')[0],
+                   'end_date':str(perm_details_dict['period_end_date']).split(' ')[0],
+                   'current_strat_dict':current_strat_dict,
+                   'strategy_params':strategy_params,
+                   'trades_list': perm_details_dict['trades_list'],
+                   'trades_list_titles':['Trade Num','Bias','Entry Price','Risk Price','Exit Price',
+                                         'Entry Date','Exit Date','R Profit','Cumulative R'],
+                   'evaluation_metrics':evaluation_metrics,
+                   'candle_chart':candle_chart,
+                   'equity_curve_chart':equity_curve_chart,
+                   'excursion_charts':MAE_MFE_charts}
+
+    # context = pull_from_queryset(strat_name=strat_name,
+    #                              asset_ticker=asset_ticker,
+    #                              perm_id=perm_id)
+
+    context = pull_from_locals(strat_name=strat_name,
+                                 asset_ticker=asset_ticker,
+                                 perm_id=perm_id)
 
     return render(request, 'individual_results.html',context)
 
 
 def interpreting_results(request):
-    all_strats_qs = Strategies.objects.all().values('strategy_reference')
-    all_strats = [item['strategy_reference'].replace('_', ' ').upper() for item in all_strats_qs]
 
-    default_asset_qs = Assets.objects.filter(pk=1).values('asset_ticker')
-    context = {'strats_sidebar_list': all_strats,
-               'sidebar_default_asset': default_asset_qs[0]['asset_ticker']}
+    def pull_from_locals():
+        root_data_dir = os.path.join('website', 'data')
+
+        all_strats_dict = pd.read_csv(os.path.join(root_data_dir, 'strategies_info/all_strats_info.csv')).to_dict(
+            'records')
+        strats_sidebar_list = [item['strategy_reference'].replace('_', ' ').upper() for item in all_strats_dict]
+
+        all_assets_dict = pd.read_csv(os.path.join(root_data_dir, 'asset_info/all_asset_info.csv')).to_dict('records')
+
+        return {'strats_sidebar_list': strats_sidebar_list,
+                'sidebar_default_asset':all_assets_dict[0]['asset_ticker']}
+
+    def pull_from_queryset():
+        all_strats_qs = Strategies.objects.all().values('strategy_reference')
+        all_strats = [item['strategy_reference'].replace('_', ' ').upper() for item in all_strats_qs]
+
+        default_asset_qs = Assets.objects.filter(pk=1).values('asset_ticker')
+        return {'strats_sidebar_list': all_strats,
+                'sidebar_default_asset': default_asset_qs[0]['asset_ticker']}
+
+    # context = pull_from_queryset()
+    context = pull_from_locals()
 
     return render(request,'interpreting_results.html',context)
 
 def disclaimer(request):
-    all_strats_qs = Strategies.objects.all().values('strategy_reference')
-    all_strats = [item['strategy_reference'].replace('_', ' ').upper() for item in all_strats_qs]
 
-    default_asset_qs = Assets.objects.filter(pk=1).values('asset_ticker')
-    context = {'strats_sidebar_list': all_strats,
-               'sidebar_default_asset': default_asset_qs[0]['asset_ticker']}
+    def pull_from_locals():
+        root_data_dir = os.path.join('website', 'data')
+
+        all_strats_dict = pd.read_csv(os.path.join(root_data_dir, 'strategies_info/all_strats_info.csv')).to_dict(
+            'records')
+        strats_sidebar_list = [item['strategy_reference'].replace('_', ' ').upper() for item in all_strats_dict]
+
+        all_assets_dict = pd.read_csv(os.path.join(root_data_dir, 'asset_info/all_asset_info.csv')).to_dict('records')
+
+        return {'strats_sidebar_list': strats_sidebar_list,
+                'sidebar_default_asset': all_assets_dict[0]['asset_ticker']}
+
+    def pull_from_queryset():
+        all_strats_qs = Strategies.objects.all().values('strategy_reference')
+        all_strats = [item['strategy_reference'].replace('_', ' ').upper() for item in all_strats_qs]
+
+        default_asset_qs = Assets.objects.filter(pk=1).values('asset_ticker')
+        return {'strats_sidebar_list': all_strats,
+                'sidebar_default_asset': default_asset_qs[0]['asset_ticker']}
+
+        # context = pull_from_queryset()
+
+    # context = pull_from_queryset()
+    context = pull_from_locals()
 
     return render(request, 'disclaimer.html', context)
 
 def methodology(request):
-    all_strats_qs = Strategies.objects.all().values('strategy_reference')
-    all_strats = [item['strategy_reference'].replace('_', ' ').upper() for item in all_strats_qs]
 
-    default_asset_qs = Assets.objects.filter(pk=1).values('asset_ticker')
-    context = {'strats_sidebar_list': all_strats,
-               'sidebar_default_asset': default_asset_qs[0]['asset_ticker']}
+    def pull_from_locals():
+        root_data_dir = os.path.join('website', 'data')
+
+        all_strats_dict = pd.read_csv(os.path.join(root_data_dir, 'strategies_info/all_strats_info.csv')).to_dict(
+            'records')
+        strats_sidebar_list = [item['strategy_reference'].replace('_', ' ').upper() for item in all_strats_dict]
+
+        all_assets_dict = pd.read_csv(os.path.join(root_data_dir, 'asset_info/all_asset_info.csv')).to_dict('records')
+
+        return {'strats_sidebar_list': strats_sidebar_list,
+                'sidebar_default_asset': all_assets_dict[0]['asset_ticker']}
+
+    def pull_from_queryset():
+        all_strats_qs = Strategies.objects.all().values('strategy_reference')
+        all_strats = [item['strategy_reference'].replace('_', ' ').upper() for item in all_strats_qs]
+
+        default_asset_qs = Assets.objects.filter(pk=1).values('asset_ticker')
+        return {'strats_sidebar_list': all_strats,
+                'sidebar_default_asset': default_asset_qs[0]['asset_ticker']}
+
+        # context = pull_from_queryset()
+
+    # context = pull_from_queryset()
+    context = pull_from_locals()
 
     return render(request, 'methodology.html',context)
 
 def about(request):
-    all_strats_qs = Strategies.objects.all().values('strategy_reference')
-    all_strats = [item['strategy_reference'].replace('_', ' ').upper() for item in all_strats_qs]
 
-    default_asset_qs = Assets.objects.filter(pk=1).values('asset_ticker')
-    context = {'strats_sidebar_list': all_strats,
-               'sidebar_default_asset': default_asset_qs[0]['asset_ticker']}
+    def pull_from_locals():
+        root_data_dir = os.path.join('website', 'data')
+
+        all_strats_dict = pd.read_csv(os.path.join(root_data_dir, 'strategies_info/all_strats_info.csv')).to_dict(
+            'records')
+        strats_sidebar_list = [item['strategy_reference'].replace('_', ' ').upper() for item in all_strats_dict]
+
+        all_assets_dict = pd.read_csv(os.path.join(root_data_dir, 'asset_info/all_asset_info.csv')).to_dict('records')
+
+        return {'strats_sidebar_list': strats_sidebar_list,
+                'sidebar_default_asset': all_assets_dict[0]['asset_ticker']}
+
+    def pull_from_queryset():
+        all_strats_qs = Strategies.objects.all().values('strategy_reference')
+        all_strats = [item['strategy_reference'].replace('_', ' ').upper() for item in all_strats_qs]
+
+        default_asset_qs = Assets.objects.filter(pk=1).values('asset_ticker')
+        return {'strats_sidebar_list': all_strats,
+                'sidebar_default_asset': default_asset_qs[0]['asset_ticker']}
+
+    # context = pull_from_queryset()
+    context = pull_from_locals()
 
     return render(request, 'about.html',context)
