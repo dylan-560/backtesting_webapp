@@ -87,8 +87,8 @@ def strategy_backtests(request, strat_name, asset_ticker):
                 """
                 position:bottomresults/topresults
                 """
-                filename = strat_name + '_' + asset_ticker + '_' + month + '_' + position + '.csv'
-                filepath = os.path.join(root_data_dir, 'eval_metrics', strat_name, asset_ticker)
+                filename = strat_ref + '_' + asset_ticker + '_' + month + '_' + position + '.csv'
+                filepath = os.path.join(root_data_dir, 'eval_metrics', strat_ref, asset_ticker)
                 df = pd.read_csv(os.path.join(filepath, filename))
                 total_count = 0
                 try:
@@ -101,23 +101,26 @@ def strategy_backtests(request, strat_name, asset_ticker):
 
                 return ret_dict, total_count
 
+            strat_ref = current_strat_dict['strategy_reference'].lower()
+
             top_dict, count = pull_x_results(position='topresults')
             bottom_dict, _ = pull_x_results(position='bottomresults')
             return top_dict, bottom_dict, count
 
         ##################################################################
 
-        strat_name = strat_name.replace('-', '_').lower()
-        asset_ticker = asset_ticker.replace('-', '_').upper()
+        strat_name = strat_name.replace('-', ' ').lower()
+        #asset_ticker = asset_ticker.replace('-', '_').upper()
+        asset_ticker = asset_ticker.upper()
 
         # load in strats info
         all_strats_dict = pd.read_csv(os.path.join(root_data_dir, 'strategies_info/all_strats_info.csv')).to_dict(
             'records')
         all_assets_dict = pd.read_csv(os.path.join(root_data_dir, 'asset_info/all_asset_info.csv')).to_dict('records')
 
-        strats_sidebar_list = [item['strategy_reference'].replace('_', ' ').upper() for item in all_strats_dict]
+        strats_sidebar_list = [item['strategy_name'].replace('_', ' ').upper() for item in all_strats_dict]
 
-        current_strat_dict = [item for item in all_strats_dict if item['strategy_reference'].lower() == strat_name][0]
+        current_strat_dict = [item for item in all_strats_dict if item['strategy_name'].lower() == strat_name][0]
         current_asset_dict = [item for item in all_assets_dict if item['asset_ticker'] == asset_ticker][0]
 
         month_0_end = datetime.today().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
@@ -241,13 +244,13 @@ def strategy_backtest_default(request):
 
         all_strats_dict = pd.read_csv(os.path.join(root_data_dir, 'strategies_info/all_strats_info.csv')).to_dict('records')
         all_assets_dict = pd.read_csv(os.path.join(root_data_dir, 'asset_info/all_asset_info.csv')).to_dict('records')
-        default_strat = all_strats_dict[0]['strategy_reference']
+        default_strat = all_strats_dict[0]['strategy_name']
         default_asset = all_assets_dict[0]['asset_ticker']
         return default_strat, default_asset
 
     def pull_from_queryset():
         all_strats_qs = Strategies.objects.filter(pk=1).values('strategy_reference')
-        default_strat = [item['strategy_reference'] for item in all_strats_qs][0]
+        default_strat = [item['strategy_name'] for item in all_strats_qs][0]
 
         all_assets_qs = Assets.objects.filter(pk=1).values('asset_ticker')
         default_asset = [item['asset_ticker'] for item in all_assets_qs][0]
@@ -809,9 +812,7 @@ def individual_results(request,strat_name,asset_ticker,perm_id):
         return fig.to_html()
 
     def create_MFE_MAE_chart(perm_dict):
-        print('--------------------------------------')
-        print(perm_dict)
-        print('--------------------------------------')
+
         def bin_df(base_df, bins=32):
 
             def get_x_axis(df, title):
@@ -1156,8 +1157,8 @@ def individual_results(request,strat_name,asset_ticker,perm_id):
 
             return ret_dict
         ##################################################################
-
-        asset_ticker = asset_ticker.replace('-','_').upper()
+        # asset_ticker = asset_ticker.replace('-', '_').upper()
+        asset_ticker = asset_ticker.upper()
 
         # load in strats info
         all_strats_dict = pd.read_csv(os.path.join(root_data_dir, 'strategies_info/all_strats_info.csv')).to_dict('records')
@@ -1280,7 +1281,6 @@ def individual_results(request,strat_name,asset_ticker,perm_id):
                                  perm_id=perm_id)
 
     return render(request, 'individual_results.html',context)
-
 
 def interpreting_results(request):
 

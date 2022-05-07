@@ -3,7 +3,14 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
-        <entry key="\website\data\candle_data\EUR_USD.csv">
+        <entry key="\website\data\asset_info\all_asset_info.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\website\data\candle_data\EUR-USD.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
@@ -17,14 +24,7 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="\website\data\eval_metrics\basic_X_MA_crossover_V1\EUR_USD\basic_X_MA_crossover_V1_EUR_USD_currmonth_bottomresults.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\website\data\eval_metrics\basic_X_MA_crossover_V1\EUR_USD\basic_X_MA_crossover_V1_EUR_USD_prevmonth_topresults.csv">
+        <entry key="\website\data\eval_metrics\basic_x_ma_crossover_v1\EUR-USD\basic_x_ma_crossover_v1_EUR-USD_currmonth_bottomresults.csv">
           <value>
             <Attribute>
               <option name="separator" value=":" />
