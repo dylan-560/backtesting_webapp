@@ -245,4 +245,4 @@ def update_local_data_files():
 
     pull_all_top_x_eval_results(strats_info=all_strats_info, assets_info=all_assets_info)
 
-# update_local_data_files()
+update_local_data_files()
