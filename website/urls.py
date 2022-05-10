@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.strategy_backtest_default, name='backtests_default'),
+    path('', views.top_results_home, name='top_results_home'),
     path('evaluation_results/<str:strat_name>/<str:asset_ticker>/<int:perm_id>/',views.individual_results,name='Evaluation Results'),
     path('backtests/<str:strat_name>/<str:asset_ticker>/', views.strategy_backtests, name='backtests'),
     path('methodology/', views.methodology, name='methodology'),

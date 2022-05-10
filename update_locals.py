@@ -66,6 +66,9 @@ def update_local_data_files():
                                 os.path.join(dir_path, strat_ref, asset['asset_ticker'])):
                             os.mkdir(os.path.join(dir_path, strat_ref, asset['asset_ticker']))
 
+        if not os.path.exists(os.path.join(root_data_dir,'eval_metrics','all_strat_results')):
+            os.mkdir(os.path.join(root_data_dir,'eval_metrics','all_strat_results'))
+
     def establish_DB_conection():
         mydb = mysql.connector.connect(host='localhost',
                                        user='root',
@@ -76,6 +79,7 @@ def update_local_data_files():
         return mydb
 
     def pull_all_assets_info_from_DB():
+        print('pulling assets...')
         query = "SELECT * FROM assets;"
 
         cursor = db_obj.cursor(dictionary=True)
@@ -88,10 +92,11 @@ def update_local_data_files():
             ret_val.append(a)
 
         cursor.close()
-
+        print('     ...done')
         return ret_val
 
     def pull_all_strategies_info_from_DB():
+        print('pulling strategies...')
         query = "SELECT * FROM strategies;"
 
         cursor = db_obj.cursor(dictionary=True)
@@ -104,12 +109,13 @@ def update_local_data_files():
             ret_val.append(a)
 
         cursor.close()
-
+        print('     ...done')
         return ret_val
 
     def pull_all_candle_data(assets_list):
-
+        print('pulling candle data...')
         for asset in assets_list:
+            print('     for ',asset['asset_ticker'])
             query = "SELECT datetime, open, high, low, close, volume " \
                     "FROM asset_ohlcv " \
                     "WHERE asset_ticker='" + asset['asset_ticker'] + "';"
@@ -125,7 +131,7 @@ def update_local_data_files():
                 data_df.to_csv(os.path.join(root_data_dir, 'candle_data', asset['asset_ticker'] + '.csv'), index=False)
             except Exception as E:
                 print('ERROR:', E)
-            print()
+            print('     ...done')
 
     def pull_all_top_x_eval_results(strats_info, assets_info):
 
@@ -179,7 +185,7 @@ def update_local_data_files():
             df.to_csv(save_filepath, index=False)
 
         #############################################
-
+        print('pulling eval results...')
         month_0_end = datetime.today().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
         month_0_start = (month_0_end - timedelta(days=1)).replace(day=1, hour=0, minute=0, second=0, microsecond=0)
         month_1_end = month_0_start
@@ -190,6 +196,7 @@ def update_local_data_files():
 
         for strat in strats_info:
             for asset in assets_info:
+                print('     ',strat['strategy_name'],'-',asset['asset_ticker'])
                 # previous month best and worst
                 save_results(strat_info=strat,
                              asset_info=asset,
@@ -221,6 +228,91 @@ def update_local_data_files():
                              label='currmonth')
 
         db_obj.close()
+        print('     ...done')
+
+    def pull_absolute_top_results():
+
+        def save_results(orient, start_date, end_date, label, total_count=None):
+
+            def insert_metrics(frame):
+                frame['strategy_name'] = [d['strategy_name'] for d in all_strats_info if d['strategy_id'] == frame['strat_id']][0]
+                frame['strategy_reference'] = [d['strategy_reference'] for d in all_strats_info if d['strategy_id'] == frame['strat_id']][0]
+                frame['asset_ticker'] = [d['asset_ticker'] for d in all_assets_info if d['asset_id'] == frame['asset_id']][0]
+                return frame
+
+            ###############################################################
+            base_query = "SELECT * " \
+                         "FROM evaluation_metrics " \
+                         "WHERE period_end_date='" + end_date + "' AND " \
+                         "period_start_date='" + start_date + "'" \
+                         "ORDER BY total_realized_R " + orient + " limit 10;"
+
+            df = pd.read_sql(base_query, db_obj)
+
+            if not total_count:
+                count_query = "SELECT COUNT(*) " \
+                              "FROM evaluation_metrics " \
+                              "WHERE period_end_date='" + end_date + "' AND " \
+                              "period_start_date='" + start_date + "';"
+
+                cursor.execute(count_query)
+                total_count = cursor.fetchall()[0][0]
+
+            df['total_count'] = total_count
+
+            df['strategy_params'] = df['strategy_params'].apply(json.loads)
+            df['trades_list'] = df['trades_list'].apply(json.loads)
+
+            df = df.apply(insert_metrics, axis=1)
+
+            if orient == 'desc':
+                filename = label + '_' + 'topresults.csv'
+            if orient == 'asc':
+                filename = label + '_' + 'bottomresults.csv'
+
+            save_filepath = os.path.join(root_data_dir,
+                                         'eval_metrics',
+                                         'all_strat_results',
+                                         filename)
+
+            df.to_csv(save_filepath, index=False)
+            print('         ...',save_filepath)
+            return total_count
+
+        ##############################################
+        print('pulling results for all strats...')
+        month_0_end = datetime.today().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        month_0_start = (month_0_end - timedelta(days=1)).replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        month_1_end = month_0_start
+        month_1_start = (month_1_end - timedelta(days=1)).replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+
+        db_obj = establish_DB_conection()
+        cursor = db_obj.cursor()
+
+        total_count = save_results(orient='desc',
+                                   start_date=str(month_1_start).split(' ')[0],
+                                   end_date=str(month_1_end).split(' ')[0],
+                                   label='prevmonth')
+
+        save_results(orient='asc',
+                     start_date=str(month_1_start).split(' ')[0],
+                     end_date=str(month_1_end).split(' ')[0],
+                     label='prevmonth',
+                     total_count=total_count)
+
+        # current month best and worst
+        total_count = save_results(orient='desc',
+                                   start_date=str(month_0_start).split(' ')[0],
+                                   end_date=str(month_0_end).split(' ')[0],
+                                   label='currmonth')
+
+        save_results(orient='asc',
+                     start_date=str(month_0_start).split(' ')[0],
+                     end_date=str(month_0_end).split(' ')[0],
+                     label='currmonth',
+                     total_count=total_count)
+
+        print('     ...done')
 
     ##################################################################
     ##################################################################
@@ -236,13 +328,15 @@ def update_local_data_files():
 
     recreate_data_directories(strats_list=all_strats_info, assets_list=all_assets_info)
 
+    pull_all_top_x_eval_results(strats_info=all_strats_info, assets_info=all_assets_info)
+
     # save strats and assets info as csv
     pd.DataFrame(all_assets_info).to_csv(os.path.join(root_data_dir, 'asset_info', 'all_asset_info.csv'), index=False)
-    pd.DataFrame(all_strats_info).to_csv(os.path.join(root_data_dir, 'strategies_info', 'all_strats_info.csv'),
-                                         index=False)
+    pd.DataFrame(all_strats_info).to_csv(os.path.join(root_data_dir, 'strategies_info', 'all_strats_info.csv'),index=False)
 
     pull_all_candle_data(assets_list=all_assets_info)
 
-    pull_all_top_x_eval_results(strats_info=all_strats_info, assets_info=all_assets_info)
+    pull_absolute_top_results()
 
 update_local_data_files()
+

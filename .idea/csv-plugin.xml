@@ -17,6 +17,34 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\website\data\eval_metrics\all_strat_results\currmonth_bottomresults.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\website\data\eval_metrics\all_strat_results\currmonth_topresults.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\website\data\eval_metrics\all_strat_results\prevmonth_bottomresults.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\website\data\eval_metrics\all_strat_results\prevmonth_topresults.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\website\data\eval_metrics\basic_X_MA_crossover_V1\ETH-USD\basic_X_MA_crossover_V1_ETH-USD_currmonth_bottomresults.csv">
           <value>
             <Attribute>
@@ -24,10 +52,94 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\website\data\eval_metrics\basic_bollinger_bands_v1\BTC-USD\basic_bollinger_bands_v1_BTC-USD_currmonth_bottomresults.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\website\data\eval_metrics\basic_bollinger_bands_v1\BTC-USD\basic_bollinger_bands_v1_BTC-USD_currmonth_topresults.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\website\data\eval_metrics\basic_bollinger_bands_v1\BTC-USD\basic_bollinger_bands_v1_BTC-USD_prevmonth_bottomresults.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\website\data\eval_metrics\basic_bollinger_bands_v1\BTC-USD\basic_bollinger_bands_v1_BTC-USD_prevmonth_topresults.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\website\data\eval_metrics\basic_bollinger_bands_v1\USD-JPY\basic_bollinger_bands_v1_USD-JPY_currmonth_bottomresults.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\website\data\eval_metrics\basic_heiken_ashi_v1\BTC-USD\basic_heiken_ashi_v1_BTC-USD_currmonth_bottomresults.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\website\data\eval_metrics\basic_heiken_ashi_v2\BTC-USD\basic_heiken_ashi_v2_BTC-USD_currmonth_bottomresults.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\website\data\eval_metrics\basic_x_ma_crossover_v1\BTC-USD\basic_x_ma_crossover_v1_BTC-USD_currmonth_bottomresults.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\website\data\eval_metrics\basic_x_ma_crossover_v1\EUR-USD\basic_x_ma_crossover_v1_EUR-USD_currmonth_bottomresults.csv">
           <value>
             <Attribute>
               <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\website\data\eval_metrics\basic_xy_ma_crossover_v1\USD-JPY\basic_xy_ma_crossover_v1_USD-JPY_currmonth_bottomresults.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\website\data\eval_metrics\basic_xy_ma_crossover_v1\USD-JPY\basic_xy_ma_crossover_v1_USD-JPY_currmonth_topresults.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\website\data\eval_metrics\basic_xy_ma_crossover_v1\USD-JPY\basic_xy_ma_crossover_v1_USD-JPY_prevmonth_bottomresults.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\website\data\eval_metrics\basic_xy_ma_crossover_v1\USD-JPY\basic_xy_ma_crossover_v1_USD-JPY_prevmonth_topresults.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>

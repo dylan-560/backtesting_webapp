@@ -1,13 +1,13 @@
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
-        <a class="sidebar-brand" href="base.html">
+        <a class="sidebar-brand" href="{% url 'top_results_home' %}">
           <span class="align-middle">Backtested Technicals</span>
         </a>
-
         <ul class="sidebar-nav">
             <!-- Strategies				-->
             <li class="sidebar-header" style="font-size:18px">
                 Strategies
+                <hr>
             </li>
 
             {% for strat_name in strats_sidebar_list %}
@@ -20,6 +20,7 @@
 
             <li class="sidebar-header" style="font-size:18px">
                 Pages
+                <hr>
             </li>
 
             <li class="sidebar-item">
@@ -68,17 +69,7 @@
 <!--                </a>-->
 <!--            </li>-->
         </ul>
-
-<!--        <div class="sidebar-cta">-->
-<!--            <div class="sidebar-cta-content">-->
-<!--                <strong class="d-inline-block mb-2">Upgrade to Pro</strong>-->
-<!--                <div class="mb-3 text-sm">-->
-<!--                    Are you looking for more components? Check out our premium version.-->
-<!--                </div>-->
-<!--                <div class="d-grid">-->
-<!--                    <a href="upgrade-to-pro.html" class="btn btn-primary">Upgrade to Pro</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="sidebar-cta" style="padding-bottom: 100px;">
+        </div>
     </div>
 </nav>

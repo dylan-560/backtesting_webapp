@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+{% include 'sidebar.html' %}
+
+<div class="main">
+    <nav class="navbar navbar-expand navbar-light navbar-bg">
+        <a class="sidebar-toggle js-sidebar-toggle">
+          <i class="hamburger align-self-center"></i>
+        </a>
+    </nav>
+
+    <main class="content">
+
+
+        <div class="container-fluid">
+
+            <div class="jumbotron" style="padding-top: 10%;
+                                              padding-bottom: 10%;
+                                              margin-bottom: 20px;
+                                              background-image: url('{% static 'images/backgrounds/digital_candles.jpg' %}');
+                                              background-repeat: no-repeat;
+                                              background-size: 100% 120%;
+                                              background-position: center">
+                <div style="background-color: rgba(206, 212, 218, 0.75);
+                            text-align:center;
+                            padding: 35px;
+                            margin-right: 10%;
+                            margin-left: 10%;
+                            border-radius: 10px;">
+                    <b>
+                        <h1>Find Out Whats Working</h1>
+                        <h3>I backtested {{current_month_data.count}} different variations of technical based
+                            trading strategies to figure out whats working, where its working, and how well its working.</h3>
+                    </b>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="container-fluid p-0">
+            <!--    STRATEGY RESULTS-->
+            <h1 class="h3 mb-3"><strong>Best/Worst Performing Variations of All Strategies Across All Assets</strong></h1>
+            <!-- current month results           -->
+            <div class="row">
+                 <div class="col-12">
+                     <div class="card">
+                         <div class="card-header">
+                            <div class="row">
+                                <div class="col mt-0">
+                                    <h3 class="card-title">Current Month Results:</h3>
+                                    <h5>Out of {{current_month_data.count}} Permutations for {{ current_month_data.start_date }} to {{ current_month_data.end_date }}</h5>
+                                    <h4>Best Performing Strategy Permutations on {{timeframe}}</h4>
+                                </div>
+                            </div>
+                            <table class="table table-hover my-0">
+									<thead>
+										<tr>
+                                            <th scope="col">Strategy</th>
+                                            <th scope="col">Asset Ticker</th>
+											<th scope="col">Total R</th>
+                                            <th scope="col">Strike Rate</th>
+                                            <th scope="col">Expectancy</th>
+                                            <th scope="col">Num Trades</th>
+                                            <th scope="col"></th>
+										</tr>
+									</thead>
+									<tbody>
+                                        {% for t in current_month_data.top_winning_strats %}
+                                        <tr>
+                                            <td>{{ t.strategy_name }}</td>
+                                            <td>{{ t.asset_ticker }}</td>
+                                            <td>{{ t.total_realized_r }}</td>
+                                            <td>{{ t.strike_rate }}</td>
+                                            <td>{{ t.expectancy }}</td>
+                                            <td>{{ t.num_trades }}</td>
+                                            <td>
+                                                <a href="{% url 'Evaluation Results' t.strategy_name|slugify t.asset_ticker|slugify t.strat_parameters_id %}"
+                                                class="btn btn-secondary btn-sm"> see strategy </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+									</tbody>
+								</table>
+                         </div>
+                         <div class="card-header">
+                             <div class="row">
+                                <div class="col mt-0">
+                                    <h4>Worst Performing Strategy Permutations on {{timeframe}}</h4>
+                                </div>
+                            </div>
+                            <table class="table table-hover my-0">
+									<thead>
+										<tr>
+											<th scope="col">Strategy</th>
+                                            <th scope="col">Asset Ticker</th>
+											<th scope="col">Total R</th>
+                                            <th scope="col">Strike Rate</th>
+                                            <th scope="col">Expectancy</th>
+                                            <th scope="col">Num Trades</th>
+                                            <th scope="col"></th>
+										</tr>
+									</thead>
+									<tbody>
+                                        {% for t in current_month_data.top_losing_strats %}
+                                        <tr>
+                                            <td>{{ t.strategy_name }}</td>
+                                            <td>{{ t.asset_ticker }}</td>
+                                            <td>{{ t.total_realized_r }}</td>
+                                            <td>{{ t.strike_rate }}</td>
+                                            <td>{{ t.expectancy }}</td>
+                                            <td>{{ t.num_trades }}</td>
+                                            <td>
+                                                <a href="{% url 'Evaluation Results' t.strategy_name|slugify t.asset_ticker|slugify t.strat_parameters_id %}"
+                                                class="btn btn-secondary btn-sm"> see strategy </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+									</tbody>
+								</table>
+                         </div>
+                    </div>
+                </div>
+            </div>
+            <!-- prev month results         -->
+            <div class="row">
+                 <div class="col-12">
+                     <div class="card">
+                         <div class="card-header">
+                            <div class="row">
+                                <div class="col mt-0">
+                                    <h3 class="card-title">Previous Month Results:</h3>
+                                    <h5>Out of {{previous_month_data.count}} Permutations {{ previous_month_data.start_date }} to {{ previous_month_data.end_date }}</h5>
+                                    <h4>Best Performing Strategy Permutations on {{timeframe}}</h4>
+                                </div>
+                            </div>
+                            <table class="table table-hover my-0">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Strategy</th>
+                                        <th scope="col">Asset Ticker</th>
+                                        <th scope="col">Total R</th>
+                                        <th scope="col">Strike Rate</th>
+                                        <th scope="col">Expectancy</th>
+                                        <th scope="col">Num Trades</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for t in previous_month_data.top_winning_strats %}
+                                        <tr>
+                                            <td>{{ t.strategy_name }}</td>
+                                            <td>{{ t.asset_ticker }}</td>
+                                            <td>{{ t.total_realized_r }}</td>
+                                            <td>{{ t.strike_rate }}</td>
+                                            <td>{{ t.expectancy }}</td>
+                                            <td>{{ t.num_trades }}</td>
+                                            <td>
+                                                <a href="{% url 'Evaluation Results' t.strategy_name|slugify t.asset_ticker|slugify t.strat_parameters_id %}"
+                                                class="btn btn-secondary btn-sm"> see strategy </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                         </div>
+                         <div class="card-header">
+                             <div class="row">
+                                <div class="col mt-0">
+                                    <h4>Worst Performing Strategy Permutations on {{timeframe}}</h4>
+                                </div>
+                            </div>
+                             <table class="table table-hover my-0">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Strategy</th>
+                                        <th scope="col">Asset Ticker</th>
+                                        <th scope="col">Total R</th>
+                                        <th scope="col">Strike Rate</th>
+                                        <th scope="col">Expectancy</th>
+                                        <th scope="col">Num Trades</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for t in previous_month_data.top_losing_strats %}
+                                        <tr>
+                                            <td>{{ t.strategy_name }}</td>
+                                            <td>{{ t.asset_ticker }}</td>
+                                            <td>{{ t.total_realized_r }}</td>
+                                            <td>{{ t.strike_rate }}</td>
+                                            <td>{{ t.expectancy }}</td>
+                                            <td>{{ t.num_trades }}</td>
+                                            <td>
+                                                <a href="{% url 'Evaluation Results' t.strategy_name|slugify t.asset_ticker|slugify t.strat_parameters_id %}"
+                                                class="btn btn-secondary btn-sm"> see strategy </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                         </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row text-muted">
+                <div class="col-6 text-start">
+<!--                    <p class="mb-0">-->
+<!--                        <a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>AdminKit</strong></a> &copy;-->
+<!--                    </p>-->
+                </div>
+                <div class="col-6 text-end">
+<!--                    <ul class="list-inline">-->
+<!--                        <li class="list-inline-item">-->
+<!--                            <a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>-->
+<!--                        </li>-->
+<!--                        <li class="list-inline-item">-->
+<!--                            <a class="text-muted" href="https://adminkit.io/" target="_blank">Help Center</a>-->
+<!--                        </li>-->
+<!--                        <li class="list-inline-item">-->
+<!--                            <a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>-->
+<!--                        </li>-->
+<!--                        <li class="list-inline-item">-->
+<!--                            <a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+{% endblock content %}
