@@ -88,7 +88,7 @@ DATABASES = {
         'NAME': 'django_backtesting_db',
         'HOST': 'localhost',
         'USER': 'root',
-        'PASSWORD':'afroman3'
+        'PASSWORD':''
     }
 }
 
