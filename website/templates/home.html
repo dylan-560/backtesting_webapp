@@ -15,7 +15,7 @@
     <main class="content">
 
 
-        <div class="container-fluid">
+        <div class="container-fluid p-0">
 
             <div class="jumbotron" style="padding-top: 10%;
                                               padding-bottom: 10%;
@@ -62,9 +62,9 @@
                                             <th scope="col">Strategy</th>
                                             <th scope="col">Asset Ticker</th>
 											<th scope="col">Total R</th>
-                                            <th scope="col">Strike Rate</th>
-                                            <th scope="col">Expectancy</th>
-                                            <th scope="col">Num Trades</th>
+                                            <th class="d-none d-xl-table-cell" scope="col">Strike Rate</th>
+                                            <th class="d-none d-xl-table-cell" scope="col">Expectancy</th>
+                                            <th class="d-none d-xl-table-cell" scope="col">Num Trades</th>
                                             <th scope="col"></th>
 										</tr>
 									</thead>
@@ -74,9 +74,9 @@
                                             <td>{{ t.strategy_name }}</td>
                                             <td>{{ t.asset_ticker }}</td>
                                             <td>{{ t.total_realized_r }}</td>
-                                            <td>{{ t.strike_rate }}</td>
-                                            <td>{{ t.expectancy }}</td>
-                                            <td>{{ t.num_trades }}</td>
+                                            <td class="d-none d-xl-table-cell">{{ t.strike_rate }}</td>
+                                            <td class="d-none d-xl-table-cell">{{ t.expectancy }}</td>
+                                            <td class="d-none d-xl-table-cell">{{ t.num_trades }}</td>
                                             <td>
                                                 <a href="{% url 'Evaluation Results' t.strategy_name|slugify t.asset_ticker|slugify t.strat_parameters_id %}"
                                                 class="btn btn-secondary btn-sm"> see strategy </a>
@@ -98,9 +98,9 @@
 											<th scope="col">Strategy</th>
                                             <th scope="col">Asset Ticker</th>
 											<th scope="col">Total R</th>
-                                            <th scope="col">Strike Rate</th>
-                                            <th scope="col">Expectancy</th>
-                                            <th scope="col">Num Trades</th>
+                                            <th class="d-none d-xl-table-cell" scope="col">Strike Rate</th>
+                                            <th class="d-none d-xl-table-cell" scope="col">Expectancy</th>
+                                            <th class="d-none d-xl-table-cell" scope="col">Num Trades</th>
                                             <th scope="col"></th>
 										</tr>
 									</thead>
@@ -110,9 +110,9 @@
                                             <td>{{ t.strategy_name }}</td>
                                             <td>{{ t.asset_ticker }}</td>
                                             <td>{{ t.total_realized_r }}</td>
-                                            <td>{{ t.strike_rate }}</td>
-                                            <td>{{ t.expectancy }}</td>
-                                            <td>{{ t.num_trades }}</td>
+                                            <td class="d-none d-xl-table-cell">{{ t.strike_rate }}</td>
+                                            <td class="d-none d-xl-table-cell">{{ t.expectancy }}</td>
+                                            <td class="d-none d-xl-table-cell">{{ t.num_trades }}</td>
                                             <td>
                                                 <a href="{% url 'Evaluation Results' t.strategy_name|slugify t.asset_ticker|slugify t.strat_parameters_id %}"
                                                 class="btn btn-secondary btn-sm"> see strategy </a>
@@ -143,9 +143,9 @@
                                         <th scope="col">Strategy</th>
                                         <th scope="col">Asset Ticker</th>
                                         <th scope="col">Total R</th>
-                                        <th scope="col">Strike Rate</th>
-                                        <th scope="col">Expectancy</th>
-                                        <th scope="col">Num Trades</th>
+                                        <th class="d-none d-xl-table-cell" scope="col">Strike Rate</th>
+                                        <th class="d-none d-xl-table-cell" scope="col">Expectancy</th>
+                                        <th class="d-none d-xl-table-cell" scope="col">Num Trades</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
@@ -155,9 +155,9 @@
                                             <td>{{ t.strategy_name }}</td>
                                             <td>{{ t.asset_ticker }}</td>
                                             <td>{{ t.total_realized_r }}</td>
-                                            <td>{{ t.strike_rate }}</td>
-                                            <td>{{ t.expectancy }}</td>
-                                            <td>{{ t.num_trades }}</td>
+                                            <td class="d-none d-xl-table-cell">{{ t.strike_rate }}</td>
+                                            <td class="d-none d-xl-table-cell">{{ t.expectancy }}</td>
+                                            <td class="d-none d-xl-table-cell">{{ t.num_trades }}</td>
                                             <td>
                                                 <a href="{% url 'Evaluation Results' t.strategy_name|slugify t.asset_ticker|slugify t.strat_parameters_id %}"
                                                 class="btn btn-secondary btn-sm"> see strategy </a>
@@ -179,9 +179,9 @@
                                         <th scope="col">Strategy</th>
                                         <th scope="col">Asset Ticker</th>
                                         <th scope="col">Total R</th>
-                                        <th scope="col">Strike Rate</th>
-                                        <th scope="col">Expectancy</th>
-                                        <th scope="col">Num Trades</th>
+                                        <th class="d-none d-xl-table-cell" scope="col">Strike Rate</th>
+                                        <th class="d-none d-xl-table-cell" scope="col">Expectancy</th>
+                                        <th class="d-none d-xl-table-cell" scope="col">Num Trades</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
@@ -191,9 +191,9 @@
                                             <td>{{ t.strategy_name }}</td>
                                             <td>{{ t.asset_ticker }}</td>
                                             <td>{{ t.total_realized_r }}</td>
-                                            <td>{{ t.strike_rate }}</td>
-                                            <td>{{ t.expectancy }}</td>
-                                            <td>{{ t.num_trades }}</td>
+                                            <td class="d-none d-xl-table-cell">{{ t.strike_rate }}</td>
+                                            <td class="d-none d-xl-table-cell">{{ t.expectancy }}</td>
+                                            <td class="d-none d-xl-table-cell">{{ t.num_trades }}</td>
                                             <td>
                                                 <a href="{% url 'Evaluation Results' t.strategy_name|slugify t.asset_ticker|slugify t.strat_parameters_id %}"
                                                 class="btn btn-secondary btn-sm"> see strategy </a>

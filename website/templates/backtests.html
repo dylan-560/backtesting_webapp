@@ -108,7 +108,7 @@
 											<th scope="col">Total R </th>
                                             <th scope="col">Strike Rate</th>
                                             <th scope="col">Expectancy</th>
-                                            <th scope="col">Num Trades</th>
+                                            <th class="d-none d-xl-table-cell" scope="col">Num Trades</th>
                                             <th scope="col"></th>
 										</tr>
 									</thead>
@@ -117,7 +117,7 @@
                                         <tr>
                                             <td>{{ t.total_realized_r }}</td>
                                             <td>{{ t.strike_rate }}</td>
-                                            <td>{{ t.expectancy }}</td>
+                                            <td class="d-none d-xl-table-cell">{{ t.expectancy }}</td>
                                             <td>{{ t.num_trades }}</td>
                                             <td>
                                                 <a href="{% url 'Evaluation Results' current_strat_dict.strategy_name|slugify current_asset_dict.asset_ticker|slugify t.strat_parameters_id %}"
@@ -140,7 +140,7 @@
 											<th scope="col">Total R </th>
                                             <th scope="col">Strike Rate</th>
                                             <th scope="col">Expectancy</th>
-                                            <th scope="col">Num Trades</th>
+                                            <th class="d-none d-xl-table-cell" scope="col">Num Trades</th>
                                             <th scope="col"></th>
 										</tr>
 									</thead>
@@ -150,7 +150,7 @@
                                             <td>{{ t.total_realized_r }}</td>
                                             <td>{{ t.strike_rate }}</td>
                                             <td>{{ t.expectancy }}</td>
-                                            <td>{{ t.num_trades }}</td>
+                                            <td class="d-none d-xl-table-cell">{{ t.num_trades }}</td>
                                             <td>
                                                 <a href="{% url 'Evaluation Results' current_strat_dict.strategy_name|slugify current_asset_dict.asset_ticker|slugify t.strat_parameters_id %}"
                                                 class="btn btn-secondary btn-sm"> see strategy </a>
@@ -181,7 +181,7 @@
                                         <th scope="col">Total R </th>
                                         <th scope="col">Strike Rate</th>
                                         <th scope="col">Expectancy</th>
-                                        <th scope="col">Num Trades</th>
+                                        <th class="d-none d-xl-table-cell" scope="col">Num Trades</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
@@ -191,7 +191,7 @@
                                             <td>{{ t.total_realized_r }}</td>
                                             <td>{{ t.strike_rate }}</td>
                                             <td>{{ t.expectancy }}</td>
-                                            <td>{{ t.num_trades }}</td>
+                                            <td class="d-none d-xl-table-cell">{{ t.num_trades }}</td>
                                             <td>
                                                 <a href="{% url 'Evaluation Results' current_strat_dict.strategy_name|slugify current_asset_dict.asset_ticker|slugify t.strat_parameters_id %}"
                                                 class="btn btn-secondary btn-sm"> see strategy </a>
@@ -213,7 +213,7 @@
                                         <th scope="col">Total R </th>
                                         <th scope="col">Strike Rate</th>
                                         <th scope="col">Expectancy</th>
-                                        <th scope="col">Num Trades</th>
+                                        <th class="d-none d-xl-table-cell" scope="col">Num Trades</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
@@ -223,7 +223,7 @@
                                             <td>{{ t.total_realized_r }}</td>
                                             <td>{{ t.strike_rate }}</td>
                                             <td>{{ t.expectancy }}</td>
-                                            <td>{{ t.num_trades }}</td>
+                                            <td class="d-none d-xl-table-cell">{{ t.num_trades }}</td>
                                             <td>
                                                 <a href="{% url 'Evaluation Results' current_strat_dict.strategy_name|slugify current_asset_dict.asset_ticker|slugify t.strat_parameters_id %}"
                                                 class="btn btn-secondary btn-sm"> see strategy </a>
